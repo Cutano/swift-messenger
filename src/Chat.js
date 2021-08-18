@@ -1,5 +1,4 @@
-import React from "react";
-import {makeStyles} from "@material-ui/styles";
+import React, {useEffect, useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 // import Box from "@material-ui/core/Box";
@@ -14,42 +13,40 @@ import Avatar from "@material-ui/core/Avatar";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
 
-import ChatterListItem from "./Components/ChatterListItem";
+import FriendListItem from "./Components/FriendListItem";
+import ChatAPI from "./Apis/ChatAPI";
 
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-    chatSection: {
-        width: "100%",
-        height: "80vh",
-    },
-    headBG: {
-        backgroundColor: "#e0e0e0",
-    },
-    borderRight500: {
-        borderRight: "1px solid #e0e0e0",
-    },
-    messageArea: {
-        height: "70vh",
-        overflowY: "auto",
-    },
-});
+const Friend = {
+    sessionID: Number,
+    friendID: Number,
+    friendName: String,
+    friendAvatar: String,
+    recentMsg: String,
+    recentMsgTime: Date,
+    isOnline: Boolean,
+    newMsgCount: Number
+}
 
-const Chat = () => {
-    const classes = useStyles();
+export default function Chat(props) {
+
+    const [friendList, setFriendList] = useState([]);
+
+    useEffect(() => {
+        function friendListHandler(response) {
+            setFriendList(response.data.data.friends ?? []);
+        }
+        ChatAPI.getFriendList(props.userID, friendListHandler);
+    }, [props.userID]);
+
+    const FriendListItems = () => (
+        friendList.map(friend => (
+            <FriendListItem avatarSrc={friend.friendAvatar} name={friend.friendName} friendID={friend.friendID} key={friendList.indexOf(friend)}/>
+    )));
 
     return (
         <div>
-            <Grid container>
-                <Grid item xs={12}>
-                    <Typography variant="h5" className="header-message">
-                        Chat
-                    </Typography>
-                </Grid>
-            </Grid>
-            <Grid container component={Paper} className={classes.chatSection}>
-                <Grid item xs={3} className={classes.borderRight500}>
+            <Grid container component={Paper}>
+                <Grid item xl={3} md={4} xs={5}>
                     <List>
                         <ListItem button key="RemySharp">
                             <ListItemIcon>
@@ -62,41 +59,12 @@ const Chat = () => {
                         </ListItem>
                     </List>
                     <Divider/>
-                    <Grid item xs={12} style={{padding: "10px"}}>
-                        <TextField
-                            id="outlined-basic-email"
-                            label="Search"
-                            variant="outlined"
-                            fullWidth
-                        />
-                    </Grid>
-                    <Divider/>
                     <List>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/1.jpg" name="Foo Boo"
-                                         recentMsg="Bsadssdfdfd" newMsgCount={11} recentMsgTime="20:00" online={true}/>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/2.jpg" name="Drr Tu"
-                                         recentMsg="Sfgfsdfgd" newMsgCount={3} recentMsgTime="17:45" online={true}/>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/3.jpg" name="Ujf Tuuu"
-                                         recentMsg="sdfgd" newMsgCount={0} recentMsgTime="16:03" online={false}/>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/4.jpg" name="Foo Boo"
-                                         recentMsg="Bdsdsdsgds" newMsgCount={0} recentMsgTime="9:00" online={true}/>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/5.jpg" name="Foo Boo"
-                                         recentMsg="Rdgssdfgd" newMsgCount={100} recentMsgTime="Wen" online={false}/>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/6.jpg" name="Foo Boo"
-                                         recentMsg="Gdfdfbfbfbfdbffbfbb" newMsgCount={0} recentMsgTime="Mon"
-                                         online={false}/>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/7.jpg" name="Foo Boo"
-                                         recentMsg="Nsdgdge sdgdgfd" newMsgCount={0} recentMsgTime="Aug 11"
-                                         online={false}/>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/2.jpg" name="Foo Boo"
-                                         recentMsg="Tdfhf fd sdb" newMsgCount={0} recentMsgTime="Aug 2" online={false}/>
-                        <ChatterListItem avatarSrc="https://material-ui.com/static/images/avatar/6.jpg" name="Foo Boo"
-                                         recentMsg="Tdfgfw fe" newMsgCount={0} recentMsgTime="Jul 25" online={false}/>
-
+                        <FriendListItems/>
                     </List>
                 </Grid>
-                <Grid item xs={9}>
-                    <List className={classes.messageArea}>
+                <Grid item xl={9} md={8} xs={7}>
+                    <List>
                         <ListItem key="1">
                             <Grid container>
                                 <Grid item xs={12}>
@@ -158,4 +126,3 @@ const Chat = () => {
     );
 };
 
-export default Chat;
