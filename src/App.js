@@ -1,26 +1,17 @@
 import * as React from 'react';
 // import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-// import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box';
 // import Link from '@material-ui/core/Link';
 
 import Chat from './Components/Chat';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © 姜鸿博, 刘林晖, 卫金建, 高喜颖 '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import MainAppBar from "./Components/MainAppBar";
 
 export default function App() {
   return (
-    <>
+    <Box sx={{height: "100%", display: "flex", flexDirection: "column", overflow: "hidden"}}>
+        <MainAppBar/>
         <Chat/>
-        <Copyright/>
-    </>
+    </Box>
   );
 }
