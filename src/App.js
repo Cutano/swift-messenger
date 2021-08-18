@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 // import Link from '@material-ui/core/Link';
 
 import Chat from './Components/Chat';
+import MainAppBar from "./Components/MainAppBar";
 
 function Copyright() {
   return (
@@ -19,8 +20,9 @@ function Copyright() {
 export default function App() {
   return (
     <>
+        <MainAppBar/>
         <Chat/>
-        <Copyright/>
+        {/*<Copyright/>*/}
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-// import Box from "@material-ui/core/Box";
+import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -44,9 +44,9 @@ export default function Chat(props) {
     )));
 
     return (
-        <div>
+        <Box position="fixed" sx={{top: 64, width: "100%"}}>
             <Grid container component={Paper}>
-                <Grid item xl={3} md={4} xs={5}>
+                <Grid item xl={3} md={4} xs={5} sx={{bottom: 0}}>
                     <List>
                         <ListItem button key="RemySharp">
                             <ListItemIcon>
@@ -59,11 +59,11 @@ export default function Chat(props) {
                         </ListItem>
                     </List>
                     <Divider/>
-                    <List>
+                    <List sx={{overflow: 'scroll'}}>
                         <FriendListItems/>
                     </List>
                 </Grid>
-                <Grid item xl={9} md={8} xs={7}>
+                <Grid item xl={9} md={8} xs={7} sx={{bottom: 0}}>
                     <List>
                         <ListItem key="1">
                             <Grid container>
@@ -122,7 +122,7 @@ export default function Chat(props) {
                     </Grid>
                 </Grid>
             </Grid>
-        </div>
+        </Box>
     );
 };
 
