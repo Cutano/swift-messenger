@@ -20,6 +20,10 @@ export default function MessageFragment(props) {
         setLoading(true);
     }
 
+    function sendMessage() {
+        ChatAPI.sendMessage(props.friendID);
+    }
+
     useEffect(() => {
         function handleNewMsg(newMsg) {
             setMessages((messages) => {

@@ -1,6 +1,6 @@
 import {wsBase} from "./UrlBase";
 import axios from "axios";
-import {clearUnread, conversationHistoryMsg, friendList} from "./Posts";
+import {addFriend, clearUnread, conversationHistoryMsg, friendList} from "./Posts";
 
 const loginData = {
     userID: Number,
@@ -15,6 +15,7 @@ const msgData = {
 export default class ChatAPI {
     static userID;
     static socket = new WebSocket(wsBase);
+    static addNewFriendHandler;
     static friendStatusChangeHandlers = new Map();
     static friendNewMsgHandlers = new Map();
     static conversationNewMsgHandlers = new Map();
@@ -54,13 +55,20 @@ export default class ChatAPI {
                         this.userStatusChangeHandler(false);
                     break;
                 case "newMsg":
-                    if (this.friendNewMsgHandlers.has(data.data.userID))
+                    if (this.friendNewMsgHandlers.has(data.data.userID)){
+                        // Old friend
                         this.friendNewMsgHandlers.get(data.data.userID)(data.data.newMsg, data.data.date);
+                    }
+                    else {
+                        // New friend
+                        if (this.addNewFriendHandler)
+                            this.addNewFriendHandler()
+                    }
                     break;
-                case  "historyMsg":
-                    if (this.historyMsgHandler)
-                        this.historyMsgHandler(data.data.msgs);
-                    break;
+                // case  "historyMsg":
+                //     if (this.historyMsgHandler)
+                //         this.historyMsgHandler(data.data.msgs);
+                //     break;
                 default:
                     console.log("Unknown message type.");
                     break;
@@ -70,6 +78,14 @@ export default class ChatAPI {
         this.socket.addEventListener('close', (event) => {
             console.log('Closed', event.data);
         });
+    }
+
+    static addNewFriend(friendID) {
+        axios.post(addFriend, {userID: this.userID, friendID: friendID}).then(this.addNewFriendHandler);
+    }
+
+    static sendMessage(friendID) {
+        // this.socket.send()
     }
 
     static getHistoryMsg(friendID, conversationHistoryMsgHandler) {
@@ -85,6 +101,10 @@ export default class ChatAPI {
 
     static getFriendList(friendListHandler) {
         axios.post(friendList, {userID: this.userID}).then(friendListHandler);
+    }
+
+    static subscribeToAddNewFriend(handleAddNewFriend) {
+        this.addNewFriendHandler = handleAddNewFriend;
     }
 
     static subscribeToUserStatus(handleStatusChange) {
@@ -105,6 +125,10 @@ export default class ChatAPI {
 
     static subscribeToConversationNewMsg(friendID, handleNewMsg) {
         this.conversationNewMsgHandlers.set(friendID, handleNewMsg);
+    }
+
+    static unsubscribeToAddNewFriend() {
+        this.addNewFriendHandler = null;
     }
 
     static unsubscribeFromUserStatus() {

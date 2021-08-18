@@ -1,5 +1,5 @@
 import Mock from 'mockjs';
-import {clearUnread, conversationHistoryMsg, friendList} from "../Apis/Posts";
+import {addFriend, clearUnread, conversationHistoryMsg, friendList} from "../Apis/Posts";
 
 Mock.setup({
     timeout: '10-100'
@@ -35,6 +35,12 @@ Mock.mock(conversationHistoryMsg, "post", {
 });
 
 Mock.mock(clearUnread, "post", {
+    "data": {
+        "result": "success"
+    }
+});
+
+Mock.mock(addFriend, "post", {
     "data": {
         "result": "success"
     }
