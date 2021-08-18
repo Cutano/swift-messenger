@@ -6,6 +6,7 @@ import App from './App';
 import theme from './theme';
 import reportWebVitals from './Utilities/reportWebVitals';
 import * as serviceWorker from './Utilities/serviceWorker';
+import './Mockings/Mocking'
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
