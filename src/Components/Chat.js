@@ -13,8 +13,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
 
-import FriendListItem from "./Components/FriendListItem";
-import ChatAPI from "./Apis/ChatAPI";
+import FriendListItem from "./FriendListItem";
+import ChatAPI from "../Apis/ChatAPI";
 
 const Friend = {
     sessionID: Number,

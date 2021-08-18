@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 // import Box from '@material-ui/core/Box';
 // import Link from '@material-ui/core/Link';
 
-import Chat from './Chat';
+import Chat from './Components/Chat';
 
 function Copyright() {
   return (
