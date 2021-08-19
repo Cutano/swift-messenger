@@ -16,6 +16,12 @@ const theme = createTheme({
     online: {
       main: '#67b955',
     },
+    msgBubbleSelf: {
+      main: '#aa89ff'
+    },
+    msgBubbleFriend: {
+      main: '#eaeaea'
+    }
   },
 });
 

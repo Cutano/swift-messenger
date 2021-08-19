@@ -8,7 +8,7 @@ Mock.mock(friendList, "post", {
             "sessionID": "@integer(1,99999999)",
             "friendID": "@integer(10000000,99999999)",
             "friendName": "@cname",
-            "friendAvatar": "@image('250x250')",
+            "friendAvatar": "@dataImage('250x250')",
             "recentMsg": "@csentence",
             "recentMsgTime": "@datetime",
         }]

@@ -7,7 +7,7 @@ export default function MainAppBar() {
     return (
         <AppBar position="sticky" sx={{height: 64, flex: "0 0 auto", overflow: "auto"}}>
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant="h6" component="div" noWrap={true} sx={{ flexGrow: 1, userSelect: "none" }}>
                     Swift Messenger
                 </Typography>
                 <Button

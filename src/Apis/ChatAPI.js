@@ -14,9 +14,11 @@ const msgData = {
 
 export default class ChatAPI {
     static socket = new WebSocket(wsBase);
-    static statusChangeHandlers = new Map();
-    static newMsgHandlers = new Map();
+    static friendStatusChangeHandlers = new Map();
+    static friendNewMsgHandlers = new Map();
+    static conversationNewMsgHandlers = new Map();
     static historyMsgHandler;
+    static userStatusChangeHandler;
 
     static connectToWebSocketServer() {
         // this.socket = new WebSocket(wsBase);
@@ -31,19 +33,28 @@ export default class ChatAPI {
             console.log(data);
             switch (data.type) {
                 case "friendLogin":
-                    if (this.statusChangeHandlers.has(data.data.userID))
-                        this.statusChangeHandlers.get(data.data.userID)(true);
+                    if (this.friendStatusChangeHandlers.has(data.data.userID))
+                        this.friendStatusChangeHandlers.get(data.data.userID)(true);
                     break;
                 case "friendLogout":
-                    if (this.statusChangeHandlers.has(data.data.userID))
-                        this.statusChangeHandlers.get(data.data.userID)(false);
+                    if (this.friendStatusChangeHandlers.has(data.data.userID))
+                        this.friendStatusChangeHandlers.get(data.data.userID)(false);
+                    break;
+                case "userLogin":
+                    if (this.userStatusChangeHandler)
+                        this.userStatusChangeHandler(true);
+                    break;
+                case "userLogout":
+                    if (this.userStatusChangeHandler)
+                        this.userStatusChangeHandler(false);
                     break;
                 case "newMsg":
-                    if (this.newMsgHandlers.has(data.data.userID))
-                        this.newMsgHandlers.get(data.data.userID)(data.data.newMsg, data.data.date);
+                    if (this.friendNewMsgHandlers.has(data.data.userID))
+                        this.friendNewMsgHandlers.get(data.data.userID)(data.data.newMsg, data.data.date);
                     break;
                 case  "historyMsg":
-                    this.historyMsgHandler(data.data.msgs);
+                    if (this.historyMsgHandler)
+                        this.historyMsgHandler(data.data.msgs);
                     break;
                 default:
                     console.log("Unknown message type.");
@@ -60,27 +71,43 @@ export default class ChatAPI {
         axios.post(friendList, {userID: userID}).then(friendListHandler);
     }
 
+    static subscribeToUserStatus(handleStatusChange) {
+        this.userStatusChangeHandler = handleStatusChange;
+    }
+
     static subscribeToFriendStatus(friendID, handleStatusChange) {
-        this.statusChangeHandlers.set(friendID, handleStatusChange);
+        this.friendStatusChangeHandlers.set(friendID, handleStatusChange);
     }
 
     static subscribeToFriendNewMsg(friendID, handleNewMsg) {
-        this.newMsgHandlers.set(friendID, handleNewMsg);
+        this.friendNewMsgHandlers.set(friendID, handleNewMsg);
     }
 
     static subscribeToFriendHistoryMsg(handleHistoryMsg) {
         this.historyMsgHandler = handleHistoryMsg;
     }
 
+    static subscribeToConversationNewMsg(friendID, handleNewMsg) {
+        this.conversationNewMsgHandlers.set(friendID, handleNewMsg);
+    }
+
+    static unsubscribeFromUserStatus() {
+        this.userStatusChangeHandler = null;
+    }
+
     static unsubscribeFromFriendStatus(friendID) {
-        this.statusChangeHandlers.delete(friendID);
+        this.friendStatusChangeHandlers.delete(friendID);
     }
 
     static unsubscribeFromFriendNewMsg(friendID) {
-        this.newMsgHandlers.delete(friendID);
+        this.friendNewMsgHandlers.delete(friendID);
     }
 
     static unsubscribeToFriendHistoryMsg() {
         this.historyMsgHandler = null;
+    }
+
+    static unsubscribeFromConversationNewMsg(friendID) {
+        this.conversationNewMsgHandlers.delete(friendID);
     }
 }
