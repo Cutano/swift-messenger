@@ -16,7 +16,7 @@ export default function MessageBubble(props) {
     return (
         <Paper onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} elevation={isMouseOver ? 3 : 1}
                color={props.isFriend ? "msgBubbleFriend" : "msgBubbleSelf"} sx={{p: 1, borderRadius: 3}}>
-            <Typography>
+            <Typography maxWidth="500px">
                 {props.text}
             </Typography>
             <Typography fontSize={8} align="right" sx={{opacity: "70%", userSelect: "none"}}>

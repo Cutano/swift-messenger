@@ -1,6 +1,6 @@
 import {wsBase} from "./UrlBase";
 import axios from "axios";
-import {friendList} from "./Posts";
+import {clearUnread, conversationHistoryMsg, friendList} from "./Posts";
 
 const loginData = {
     userID: Number,
@@ -13,12 +13,17 @@ const msgData = {
 }
 
 export default class ChatAPI {
+    static userID;
     static socket = new WebSocket(wsBase);
     static friendStatusChangeHandlers = new Map();
     static friendNewMsgHandlers = new Map();
     static conversationNewMsgHandlers = new Map();
     static historyMsgHandler;
     static userStatusChangeHandler;
+
+    static setUserID(id) {
+        this.userID = id;
+    }
 
     static connectToWebSocketServer() {
         // this.socket = new WebSocket(wsBase);
@@ -67,8 +72,19 @@ export default class ChatAPI {
         });
     }
 
-    static getFriendList(userID, friendListHandler) {
-        axios.post(friendList, {userID: userID}).then(friendListHandler);
+    static getHistoryMsg(friendID, conversationHistoryMsgHandler) {
+        axios.post(conversationHistoryMsg, {
+            friendID: friendID,
+            userID: this.userID
+        }).then(conversationHistoryMsgHandler);
+    }
+
+    static clearUnreadMsg(friendID) {
+        axios.post(clearUnread, {userID: this.userID, friendID}).then();
+    }
+
+    static getFriendList(friendListHandler) {
+        axios.post(friendList, {userID: this.userID}).then(friendListHandler);
     }
 
     static subscribeToUserStatus(handleStatusChange) {

@@ -34,16 +34,23 @@ export default function Chat(props) {
     const [selectedFriendID, setSelectedFriendID] = useState(-1);
     const [friendList, setFriendList] = useState([]);
 
-    useEffect(() => {
-        function friendListHandler(response) {
-            setFriendList(response.data.data.friends ?? []);
-        }
+    function friendListHandler(response) {
+        setFriendList(response.data.data.friends ?? []);
+    }
 
-        ChatAPI.getFriendList(props.userID, friendListHandler);
+    const handleClearUnread = () => {
+        // May have side effect
+        ChatAPI.getFriendList(friendListHandler);
+    }
+
+    useEffect(() => {
+        ChatAPI.setUserID(props.userID);
+        ChatAPI.getFriendList(friendListHandler);
     }, [props.userID]);
 
     const handleSelectionChange = (e, friendID) => {
         setSelectedFriendID(friendID);
+        ChatAPI.clearUnreadMsg(props.friendID, handleClearUnread);
     }
 
     return (
@@ -55,15 +62,20 @@ export default function Chat(props) {
                 <Divider/>
                 <List sx={{overflow: 'auto', flexGrow: 1}}>
                     {friendList.map(friend => (
-                        <FriendListItem avatar={friend.friendAvatar} name={friend.friendName} recentMsg={friend.recentMsg}
-                                        friendID={friend.friendID} selected={selectedFriendID === friend.friendID} key={friend.friendID}
-                                        onClick={(e) => {handleSelectionChange(e, friend.friendID)}}/>
+                        <FriendListItem avatar={friend.friendAvatar} name={friend.friendName}
+                                        recentMsg={friend.recentMsg}
+                                        recentMsgTime={friend.recentMsgTime} unreadMsgCount={friend.unreadMsgCount}
+                                        friendID={friend.friendID} selected={selectedFriendID === friend.friendID}
+                                        key={friend.friendID}
+                                        onClick={(e) => {
+                                            handleSelectionChange(e, friend.friendID)
+                                        }}/>
                     ))}
                 </List>
             </Grid>
             <Grid item xl={9} md={8} xs={7}
                   sx={{bottom: 0, height: "100%", display: "flex", flexDirection: "column", minHeight: "min-content"}}>
-                <MessageFragment/>
+                <MessageFragment friendID={selectedFriendID}/>
             </Grid>
         </Grid>
     );

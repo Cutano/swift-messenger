@@ -1,5 +1,5 @@
 import Mock from 'mockjs';
-import {friendList} from "../Apis/Posts";
+import {clearUnread, conversationHistoryMsg, friendList} from "../Apis/Posts";
 
 Mock.mock(friendList, "post", {
     "data": {
@@ -11,6 +11,27 @@ Mock.mock(friendList, "post", {
             "friendAvatar": "@dataImage('250x250')",
             "recentMsg": "@csentence",
             "recentMsgTime": "@datetime",
+            "unreadMsgCount": "@integer(0,2)"
         }]
+    }
+});
+
+Mock.mock(conversationHistoryMsg, "post", {
+    "data": {
+        "time": "@datetime",
+        "messages|10-30": [{
+            "msgID|+1": 10000000,
+            "text": "@cparagraph",
+            "hasRead": "@boolean",
+            "timeStamp": "@datetime",
+            "userID": "@integer(10000000,99999999)",
+            "sessionID": "@integer(10000000,99999999)"
+        }]
+    }
+});
+
+Mock.mock(clearUnread, "post", {
+    "data": {
+        "result": "success"
     }
 });
