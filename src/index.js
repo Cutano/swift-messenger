@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import App from './App';
+import ChatApp from './Page/ChatApp';
 import theme from './theme';
 import reportWebVitals from './Utilities/reportWebVitals';
 import * as serviceWorker from './Utilities/serviceWorker';
@@ -18,7 +18,7 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <React.StrictMode>
       <CssBaseline />
-      <App />
+      <ChatApp />
     </React.StrictMode>
   </ThemeProvider>,
   document.getElementById('root')
