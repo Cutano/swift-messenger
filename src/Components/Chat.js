@@ -37,13 +37,15 @@ export default function Chat(props) {
     const [friendList, setFriendList] = useState([]);
     const [addFriendDialogOpen, setAddFriendDialogOpen] = useState(false);
 
-    function friendListHandler(response) {
-        setFriendList(response.data.data.friends ?? []);
+    function friendListHandler(friends) {
+        setFriendList(friends ?? []);
     }
 
-    const handleClearUnread = () => {
+    const handleClearUnread = (result) => {
         // May have side effect
-        ChatAPI.getFriendList(friendListHandler);
+        if (result === "success") {
+            ChatAPI.getFriendList(friendListHandler);
+        }
     }
 
     const handleAddFriendDialogCancel = () => {
@@ -53,10 +55,6 @@ export default function Chat(props) {
     const handleAddFriendDialogDone = (friendID) => {
         ChatAPI.addNewFriend(friendID);
         setAddFriendDialogOpen(false);
-    }
-
-    const handleAddNewFriend = () => {
-        ChatAPI.getFriendList(friendListHandler);
     }
 
     const handleSelectionChange = (e, friendID) => {
@@ -69,6 +67,10 @@ export default function Chat(props) {
     }
 
     useEffect(() => {
+        const handleAddNewFriend = () => {
+            ChatAPI.getFriendList(friendListHandler);
+        }
+
         ChatAPI.setUserID(props.userID);
         ChatAPI.getFriendList(friendListHandler);
         ChatAPI.subscribeToAddNewFriend(handleAddNewFriend)
@@ -83,7 +85,13 @@ export default function Chat(props) {
               sx={{flex: "1 1 auto", display: "flex", overflow: "hidden", width: "100%", height: "100%"}}>
             <Grid item xl={3} md={4} xs={5}
                   sx={{bottom: 0, height: "100%", display: "flex", flexDirection: "column", minHeight: "min-content"}}>
-                <Paper elevation={3} sx={{overflow: 'auto', display: "flex", flexDirection: "column", flexGrow: 1, position: "relative"}}>
+                <Paper elevation={3} sx={{
+                    overflow: 'auto',
+                    display: "flex",
+                    flexDirection: "column",
+                    flexGrow: 1,
+                    position: "relative"
+                }}>
                     <UserBanner name="Foo Boo"/>
                     <Divider/>
                     <List sx={{overflow: 'auto', flexGrow: 1}}>
@@ -94,7 +102,7 @@ export default function Chat(props) {
                                             friendID={friend.friendID} selected={selectedFriendID === friend.friendID}
                                             key={friend.friendID}
                                             onClick={(e) => {
-                                                handleSelectionChange(e, friend.friendID)
+                                                if (friend.friendID !== selectedFriendID) handleSelectionChange(e, friend.friendID);
                                             }}/>
                         ))}
                     </List>
@@ -105,9 +113,10 @@ export default function Chat(props) {
             </Grid>
             <Grid item xl={9} md={8} xs={7}
                   sx={{bottom: 0, height: "100%", display: "flex", flexDirection: "column", minHeight: "min-content"}}>
-                <MessageFragment friendID={selectedFriendID}/>
+                {selectedFriendID !== -1 && <MessageFragment friendID={selectedFriendID}/>}
             </Grid>
-            <AddFriendDialog handleCancel={handleAddFriendDialogCancel} handleDone={handleAddFriendDialogDone} open={addFriendDialogOpen}/>
+            <AddFriendDialog handleCancel={handleAddFriendDialogCancel} handleDone={handleAddFriendDialogDone}
+                             open={addFriendDialogOpen}/>
         </Grid>
     );
 };

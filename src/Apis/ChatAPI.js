@@ -55,11 +55,10 @@ export default class ChatAPI {
                         this.userStatusChangeHandler(false);
                     break;
                 case "newMsg":
-                    if (this.friendNewMsgHandlers.has(data.data.userID)){
+                    if (this.friendNewMsgHandlers.has(data.data.userID)) {
                         // Old friend
                         this.friendNewMsgHandlers.get(data.data.userID)(data.data.newMsg, data.data.date);
-                    }
-                    else {
+                    } else {
                         // New friend
                         if (this.addNewFriendHandler)
                             this.addNewFriendHandler()
@@ -92,15 +91,26 @@ export default class ChatAPI {
         axios.post(conversationHistoryMsg, {
             friendID: friendID,
             userID: this.userID
-        }).then(conversationHistoryMsgHandler);
+        }).then((res) => {
+            conversationHistoryMsgHandler(res.data.data.messages)
+        });
     }
 
-    static clearUnreadMsg(friendID) {
-        axios.post(clearUnread, {userID: this.userID, friendID}).then();
+    static clearUnreadMsg(friendID, handleClearUnread) {
+        axios.post(clearUnread, {userID: this.userID, friendID}).then((res) => {
+            handleClearUnread(res.data.result);
+        });
     }
 
     static getFriendList(friendListHandler) {
-        axios.post(friendList, {userID: this.userID}).then(friendListHandler);
+        axios.post(friendList, {userID: this.userID}).then((res) => {
+            res.data.data.friends.sort((fri1, fri2) => {
+                if (parseInt(fri1.recentMsgTime) < parseInt(fri2.recentMsgTime)) return 1;
+                else if(parseInt(fri1.recentMsgTime) > parseInt(fri2.recentMsgTime)) return -1;
+                return 0;
+            });
+            friendListHandler(res.data.data.friends);
+        });
     }
 
     static subscribeToAddNewFriend(handleAddNewFriend) {

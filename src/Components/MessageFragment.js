@@ -32,9 +32,9 @@ export default function MessageFragment(props) {
             });
         }
 
-        function historyMsgHandler(res) {
+        function historyMsgHandler(messages) {
             setLoading(false);
-            setMessages(res.data.data.messages);
+            setMessages(messages);
         }
 
         clearScreen();
