@@ -83,8 +83,15 @@ export default class ChatAPI {
         axios.post(addFriend, {userID: this.userID, friendID: friendID}).then(this.addNewFriendHandler);
     }
 
-    static sendMessage(friendID) {
-        // this.socket.send()
+    static sendMessage(friendID, text) {
+        const data = {
+            receiverID: friendID,
+            senderID: this.userID,
+            timeStamp: Date.now(),
+            message: text,
+            hasRead: false
+        };
+        this.socket.send(JSON.stringify(data));
     }
 
     static getHistoryMsg(friendID, conversationHistoryMsgHandler) {

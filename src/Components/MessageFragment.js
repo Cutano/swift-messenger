@@ -6,13 +6,14 @@ import Grid from "@material-ui/core/Grid";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
-import Fab from "@material-ui/core/Fab";
-import SendIcon from "@material-ui/icons/Send";
 import ChatAPI from "../Apis/ChatAPI";
-import {Fade, LinearProgress} from "@material-ui/core";
+import {Button, Fade, LinearProgress} from "@material-ui/core";
+import {Send} from "@material-ui/icons";
+import Box from "@material-ui/core/Box";
 
 export default function MessageFragment(props) {
     const [messages, setMessages] = useState([]);
+    const [text, setText] = useState("");
     const [loading, setLoading] = useState(true);
 
     function clearScreen() {
@@ -20,8 +21,17 @@ export default function MessageFragment(props) {
         setLoading(true);
     }
 
+    function handleTextChange(e) {
+        setText(e.target.value);
+    }
+
     function sendMessage() {
-        ChatAPI.sendMessage(props.friendID);
+        ChatAPI.sendMessage(props.friendID, text);
+    }
+
+    function handleSendBtnClicked() {
+        sendMessage();
+        setText("");
     }
 
     useEffect(() => {
@@ -60,27 +70,27 @@ export default function MessageFragment(props) {
             <List sx={{overflow: 'auto', flexGrow: 1}}>
                 {messages.map(msg => (
                     <ListItem key={msg.msgID}
-                              sx={{justifyContent: msg.userID === props.friendID ? "flex-start" : "flex-end"}}>
-                        <MessageBubble isFriend={msg.userID === props.friendID} text={msg.text}
+                              sx={{justifyContent: msg.senderID === props.friendID ? "flex-start" : "flex-end"}}>
+                        <MessageBubble isFriend={msg.senderID === props.friendID} text={msg.text}
                                        msgTime={msg.timeStamp}/>
                     </ListItem>
                 ))}
             </List>
             <Divider/>
-            <Grid container style={{padding: "20px", alignItems: "flex-end"}}>
-                <Grid item xs={11}>
-                    <TextField
-                        id="outlined-basic-email"
-                        label="Type Something"
-                        fullWidth
-                    />
-                </Grid>
-                <Grid item xs={1} align="right">
-                    <Fab color="primary" aria-label="add">
-                        <SendIcon/>
-                    </Fab>
-                </Grid>
-            </Grid>
+            <Box sx={{display: "flex", flexDirection: "row"}}>
+                <TextField
+                    id="outlined-basic"
+                    variant="outlined"
+                    label="Say Something"
+                    fullWidth
+                    onChange={handleTextChange}
+                    value={text}
+                    sx={{flexGrow: 1, margin: 1}}
+                />
+                <Button startIcon={<Send/>} variant="outlined" onClick={handleSendBtnClicked} sx={{margin: 1}}>
+                    SEND
+                </Button>
+            </Box>
         </>
     );
 }

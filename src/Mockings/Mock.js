@@ -9,7 +9,6 @@ Mock.mock(friendList, "post", {
     "data": {
         "time": "@date('T')",
         "friends|5-30": [{
-            "sessionID": "@integer(1,99999999)",
             "friendID": "@integer(10000000,99999999)",
             "friendName": "@cname",
             "friendAvatar": "@dataImage('250x250')",
@@ -28,8 +27,8 @@ Mock.mock(conversationHistoryMsg, "post", {
             "text": "@cparagraph",
             "hasRead": "@boolean",
             "timeStamp": "@date('T')",
-            "userID": "@integer(10000000,99999999)",
-            "sessionID": "@integer(10000000,99999999)"
+            "senderID": "@integer(10000000,99999999)",
+            "receiverID": "@integer(10000000,99999999)"
         }]
     }
 });

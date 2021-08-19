@@ -31,7 +31,7 @@ export default function AddFriendDialog(props) {
                     autoFocus
                     margin="dense"
                     id="name"
-                    label="Email Address"
+                    label="Friend ID"
                     fullWidth
                     variant="standard"
                     onChange={handleIDChange}
