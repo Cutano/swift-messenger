@@ -9,12 +9,15 @@ import TextField from "@material-ui/core/TextField";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
 import ChatAPI from "../Apis/ChatAPI";
+import {Fade, LinearProgress} from "@material-ui/core";
 
 export default function MessageFragment(props) {
     const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     function clearScreen() {
         setMessages([]);
+        setLoading(true);
     }
 
     useEffect(() => {
@@ -26,6 +29,7 @@ export default function MessageFragment(props) {
         }
 
         function historyMsgHandler(res) {
+            setLoading(false);
             setMessages(res.data.data.messages);
         }
 
@@ -40,11 +44,21 @@ export default function MessageFragment(props) {
 
     return (
         <>
+            <Fade
+                in={loading}
+                style={{
+                    transitionDelay: loading ? '800ms' : '0ms',
+                }}
+                unmountOnExit
+            >
+                <LinearProgress sx={{height: 6}}/>
+            </Fade>
             <List sx={{overflow: 'auto', flexGrow: 1}}>
                 {messages.map(msg => (
                     <ListItem key={msg.msgID}
                               sx={{justifyContent: msg.userID === props.friendID ? "flex-start" : "flex-end"}}>
-                        <MessageBubble isFriend={msg.userID === props.friendID} text={msg.text} msgTime={msg.timeStamp}/>
+                        <MessageBubble isFriend={msg.userID === props.friendID} text={msg.text}
+                                       msgTime={msg.timeStamp}/>
                     </ListItem>
                 ))}
             </List>

@@ -1,6 +1,10 @@
 import Mock from 'mockjs';
 import {clearUnread, conversationHistoryMsg, friendList} from "../Apis/Posts";
 
+Mock.setup({
+    timeout: '10-100'
+})
+
 Mock.mock(friendList, "post", {
     "data": {
         "time": "@datetime",
