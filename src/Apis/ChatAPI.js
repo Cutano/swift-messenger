@@ -14,7 +14,7 @@ const msgData = {
 
 export default class ChatAPI {
     static userID;
-    static socket = new WebSocket(wsBase);
+    static socket;
     static addNewFriendHandler;
     static friendStatusChangeHandlers = new Map();
     static friendNewMsgHandlers = new Map();
@@ -26,8 +26,12 @@ export default class ChatAPI {
         this.userID = id;
     }
 
+    static getUserID() {
+        return this.userID;
+    }
+
     static connectToWebSocketServer() {
-        // this.socket = new WebSocket(wsBase);
+        this.socket = new WebSocket(wsBase);
         // Connection opened
         this.socket.addEventListener('open', (event) => {
             this.socket.send('Hello Server!');

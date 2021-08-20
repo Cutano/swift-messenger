@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
-import ChatApp from './Page/ChatApp';
-import theme from './theme';
+import {BrowserRouter} from 'react-router-dom';
 import reportWebVitals from './Utilities/reportWebVitals';
 import * as serviceWorker from './Utilities/serviceWorker';
+import App from "./App";
 import "./index.css";
 import './Mockings/Mock'
 
@@ -15,13 +13,10 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <React.StrictMode>
-      <CssBaseline />
-      <ChatApp />
-    </React.StrictMode>
-  </ThemeProvider>,
-  document.getElementById('root')
+    <BrowserRouter>
+        <App/>
+    </BrowserRouter>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -16,9 +16,9 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-            </Link>{' '}
+            <Link color="inherit" href="https://github.com/Cutano">
+                姜鸿博
+            </Link>{' 刘林晖 卫金建 高喜颖 '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -64,7 +64,7 @@ export default function LoginPage() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, backgroundColor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
@@ -75,10 +75,10 @@ export default function LoginPage() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="id"
+                            label="User ID"
+                            name="UserID"
+                            autoComplete="username"
                             autoFocus
                         />
                         <TextField
@@ -104,13 +104,8 @@ export default function LoginPage() {
                             Sign In
                         </Button>
                         <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/auth/register" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

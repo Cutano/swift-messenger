@@ -1,0 +1,8 @@
+{
+  "result": "success",
+  "data": {
+    "userID": 123545643634,
+    "username": "name",
+    "userAvatar": "Base64"
+  }
+}

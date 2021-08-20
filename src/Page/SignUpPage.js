@@ -15,13 +15,13 @@ import UserIDForm from '../Components/UserIDForm';
 import PasswordForm from '../Components/PasswordForm';
 import Review from '../Components/Review';
 
-function Copyright() {
+function Copyright(props) {
     return (
-        <Typography variant="body2" color="text.secondary" align="center">
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-            </Link>{' '}
+            <Link color="inherit" href="https://github.com/Cutano">
+                姜鸿博
+            </Link>{' 刘林晖 卫金建 高喜颖 '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>

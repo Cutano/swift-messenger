@@ -1,17 +1,26 @@
 import * as React from 'react';
-// import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-// import Link from '@material-ui/core/Link';
 
 import Chat from '../Components/Chat';
 import MainAppBar from "../Components/MainAppBar";
+import {useEffect, useState} from "react";
+import ChatAPI from "../Apis/ChatAPI";
 
 export default function ChatApp() {
-  return (
-    <Box sx={{height: "100%", display: "flex", flexDirection: "column", overflow: "hidden"}}>
-        <MainAppBar/>
-        <Chat/>
-    </Box>
-  );
+    const [userID, setUserID] = useState();
+
+    useEffect(() => {
+        setUserID(ChatAPI.getUserID());
+
+        return function cleanup() {
+            setUserID(undefined);
+        };
+    }, []);
+
+    return (
+        <Box sx={{height: "100%", display: "flex", flexDirection: "column", overflow: "hidden"}}>
+            <MainAppBar/>
+            <Chat userID={userID}/>
+        </Box>
+    );
 }
