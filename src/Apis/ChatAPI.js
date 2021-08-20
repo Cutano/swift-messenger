@@ -55,9 +55,10 @@ export default class ChatAPI {
                         this.userStatusChangeHandler(false);
                     break;
                 case "newMsg":
-                    if (this.friendNewMsgHandlers.has(data.data.userID)) {
+                    if (this.friendNewMsgHandlers.has(data.data.senderID)) {
                         // Old friend
-                        this.friendNewMsgHandlers.get(data.data.userID)(data.data.newMsg, data.data.date);
+                        this.friendNewMsgHandlers.get(data.data.senderID)(data.data);
+                        this.conversationNewMsgHandlers.get(data.data.senderID)(data.data);
                     } else {
                         // New friend
                         if (this.addNewFriendHandler)
@@ -85,11 +86,14 @@ export default class ChatAPI {
 
     static sendMessage(friendID, text) {
         const data = {
-            receiverID: friendID,
-            senderID: this.userID,
-            timeStamp: Date.now(),
-            message: text,
-            hasRead: false
+            type: "newMsg",
+            data: {
+                receiverID: friendID,
+                senderID: this.userID,
+                timeStamp: Date.now(),
+                message: text,
+                hasRead: false
+            }
         };
         this.socket.send(JSON.stringify(data));
     }

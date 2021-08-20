@@ -18,10 +18,10 @@ export default function FriendListItem(props) {
             setIsOnline(status);
         }
 
-        function handleNewMsg(newMsg, dateNow) {
+        function handleNewMsg(data) {
             setUnreadMsgCount((msgCount) => (msgCount + 1));
-            setRecentMsg(newMsg);
-            setRecentMsgTime(dateNow);
+            setRecentMsg(data.message);
+            setRecentMsgTime(data.timeStamp);
         }
 
         ChatAPI.subscribeToFriendStatus(props.friendID, handleStatusChange);
