@@ -99,6 +99,11 @@ export default class ChatAPI {
             friendID: friendID,
             userID: this.userID
         }).then((res) => {
+            res.data.data.messages.sort((msg1, msg2) => {
+                if (parseInt(msg1.timeStamp) < parseInt(msg2.timeStamp)) return -1;
+                else if (parseInt(msg1.timeStamp) > parseInt(msg2.timeStamp)) return 1;
+                return 0;
+            })
             conversationHistoryMsgHandler(res.data.data.messages)
         });
     }

@@ -36,10 +36,7 @@ export default function MessageFragment(props) {
 
     useEffect(() => {
         function handleNewMsg(newMsg) {
-            setMessages((messages) => {
-                messages.push(newMsg);
-                return messages
-            });
+            setMessages((messages) => ([...messages, newMsg]));
         }
 
         function historyMsgHandler(messages) {
