@@ -1,8 +1,8 @@
 import React from 'react';
-import ChatApp from "./Page/ChatApp";
+import ChatApp from "./Pages/ChatApp";
 import { Navigate } from 'react-router-dom';
-import LoginPage from "./Page/LoginPage"
-import SignUpPage from "./Page/SignUpPage"
+import LoginPage from "./Pages/LoginPage"
+import SignUpPage from "./Pages/SignUpPage"
 
 const routes = [
     {

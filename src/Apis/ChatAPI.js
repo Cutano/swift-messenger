@@ -1,6 +1,6 @@
 import {wsBase} from "./UrlBase";
 import axios from "axios";
-import {addFriend, clearUnread, conversationHistoryMsg, friendList} from "./Posts";
+import {addFriend, clearUnread, conversationHistoryMsg, friendList, register, userInfo} from "./Posts";
 
 const loginData = {
     userID: Number,
@@ -81,6 +81,20 @@ export default class ChatAPI {
 
         this.socket.addEventListener('close', (event) => {
             console.log('Closed', event.data);
+        });
+    }
+
+    static userRegister(data, registerResultHandler) {
+        axios.post(register, data).then(res => {
+            registerResultHandler(res.data);
+        });
+    }
+
+    static getUserInfo(userInfoHandler) {
+        axios.post(userInfo, {userID: this.userID}).then(res => {
+           if (res.data.result === "success") {
+               userInfoHandler(res.data.data);
+           }
         });
     }
 

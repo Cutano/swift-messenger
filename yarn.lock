@@ -5284,6 +5284,41 @@ file-uri-to-path@1.0.0:
   resolved "https://registry.npm.taobao.org/file-uri-to-path/download/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
   integrity sha1-VTp7hEb/b2hDWcRF8eN6BdrMM90=
 
+filepond-plugin-file-encode@^2.1.10:
+  version "2.1.10"
+  resolved "https://registry.nlark.com/filepond-plugin-file-encode/download/filepond-plugin-file-encode-2.1.10.tgz#661f5e73f9361b37b2d260b59b4621fcfcfec76e"
+  integrity sha1-Zh9ec/k2Gzey0mC1m0Yh/Pz+x24=
+
+filepond-plugin-file-validate-size@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.nlark.com/filepond-plugin-file-validate-size/download/filepond-plugin-file-validate-size-2.2.4.tgz#745165d51674fa23a34e385f598c84a2ba5bb867"
+  integrity sha1-dFFl1RZ0+iOjTjhfWYyEorpbuGc=
+
+filepond-plugin-file-validate-type@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.nlark.com/filepond-plugin-file-validate-type/download/filepond-plugin-file-validate-type-1.2.6.tgz#5a03e04fb8f70f0df37ff9a285d3d2343cdc55f2"
+  integrity sha1-WgPgT7j3Dw3zf/mihdPSNDzcVfI=
+
+filepond-plugin-image-exif-orientation@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.nlark.com/filepond-plugin-image-exif-orientation/download/filepond-plugin-image-exif-orientation-1.0.11.tgz#c46b522e8873e2ad5b9c7e2bbbe71176c9df58b2"
+  integrity sha1-xGtSLohz4q1bnH4ru+cRdsnfWLI=
+
+filepond-plugin-image-preview@^4.6.8:
+  version "4.6.8"
+  resolved "https://registry.nlark.com/filepond-plugin-image-preview/download/filepond-plugin-image-preview-4.6.8.tgz#d386729ac09735e8e89b4fbf1e642b4a7eba2181"
+  integrity sha1-04ZymsCXNejom0+/HmQrSn66IYE=
+
+filepond-plugin-image-resize@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.nlark.com/filepond-plugin-image-resize/download/filepond-plugin-image-resize-2.0.10.tgz#23c1ac8956191d7dd6750565db9cf47a7dc9cfd0"
+  integrity sha1-I8GsiVYZHX3WdQVl25z0en3Jz9A=
+
+filepond@^4.29.0:
+  version "4.29.0"
+  resolved "https://registry.nlark.com/filepond/download/filepond-4.29.0.tgz#3429baa6edcf242f26f70f31396bba4ff164f087"
+  integrity sha1-NCm6pu3PJC8m9w8xOWu6T/Fk8Ic=
+
 filesize@6.1.0:
   version "6.1.0"
   resolved "https://registry.nlark.com/filesize/download/filesize-6.1.0.tgz#e81bdaa780e2451d714d71c0d7a4f3238d37ad00"
@@ -9475,6 +9510,11 @@ react-error-overlay@^6.0.9:
   version "6.0.9"
   resolved "https://registry.nlark.com/react-error-overlay/download/react-error-overlay-6.0.9.tgz?cache=0&sync_timestamp=1628099183665&other_urls=https%3A%2F%2Fregistry.nlark.com%2Freact-error-overlay%2Fdownload%2Freact-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha1-PHQwEMk1lgjDdezWvHbzXZOZWwo=
+
+react-filepond@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.npm.taobao.org/react-filepond/download/react-filepond-7.1.1.tgz#467aa45051da5dbbca03a2ce58d2aacbbcfbb0e9"
+  integrity sha1-RnqkUFHaXbvKA6LOWNKqy7z7sOk=
 
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"

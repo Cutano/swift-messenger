@@ -1,8 +1,13 @@
 import React from "react";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Logout} from "@material-ui/icons";
+import ChatAPI from "../Apis/ChatAPI";
 
 export default function MainAppBar() {
+    const handleLogoutBtnClicked = () => {
+        ChatAPI.setUserID(undefined);
+        window.location.href = "/auth/login";
+    }
 
     return (
         <AppBar position="sticky" sx={{height: 64, flex: "0 0 auto", overflow: "auto"}}>
@@ -16,6 +21,7 @@ export default function MainAppBar() {
                     color="inherit"
                     variant="outlined"
                     sx={{ mr: 2 }}
+                    onClick={handleLogoutBtnClicked}
                 >
                     LOGOUT
                 </Button>

@@ -30,12 +30,12 @@ export default function UserBanner(props) {
                            anchorOrigin={{vertical: "bottom", horizontal: 'right'}}>
                         <Avatar
                             sx={{width: 50, height: 50}}
-                            alt={props.name}
+                            alt={props.username}
                             src={props.avatar}
                         />
                     </Badge>
                 </ListItemIcon>
-                <ListItemText primary={props.name}/>
+                <ListItemText primary={props.username}/>
             </ListItem>
         </List>
     );

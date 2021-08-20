@@ -4,13 +4,15 @@ import Box from '@material-ui/core/Box';
 import Chat from '../Components/Chat';
 import MainAppBar from "../Components/MainAppBar";
 import {useEffect, useState} from "react";
-import ChatAPI from "../Apis/ChatAPI";
 
 export default function ChatApp() {
     const [userID, setUserID] = useState();
 
     useEffect(() => {
-        setUserID(ChatAPI.getUserID());
+        const urlParams = new URLSearchParams(window.location.search);
+        const uid = parseInt(urlParams.get('userid'));
+        if (uid || typeof (uid) === "number") setUserID(uid);
+        else window.location.href = "/auth/login";
 
         return function cleanup() {
             setUserID(undefined);

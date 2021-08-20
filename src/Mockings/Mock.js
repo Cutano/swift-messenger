@@ -1,9 +1,16 @@
 import Mock from 'mockjs';
-import {addFriend, clearUnread, conversationHistoryMsg, friendList} from "../Apis/Posts";
+import {addFriend, clearUnread, conversationHistoryMsg, friendList, register, userInfo} from "../Apis/Posts";
 
 Mock.setup({
     timeout: '10-100'
 })
+
+Mock.mock(register, "post", {
+    "result": "success",
+    "data": {
+        "userID|+1": 12321424
+    }
+});
 
 Mock.mock(friendList, "post", {
     "result": "success",
@@ -34,6 +41,15 @@ Mock.mock(conversationHistoryMsg, "post", {
         }]
     }
 });
+
+Mock.mock(userInfo, "post", {
+    "result": "success",
+    "data": {
+        "userID": 123545643634,
+        "username": "@cname",
+        "userAvatar": "@dataImage('250x250')"
+    }
+})
 
 Mock.mock(clearUnread, "post", {
     "result": "success"

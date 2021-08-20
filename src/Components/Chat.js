@@ -16,6 +16,8 @@ export default function Chat(props) {
     const [selectedFriendID, setSelectedFriendID] = useState(-1);
     const [friendList, setFriendList] = useState([]);
     const [addFriendDialogOpen, setAddFriendDialogOpen] = useState(false);
+    const [avatar, setAvatar] = useState("");
+    const [userName, setUserName] = useState("");
 
     function friendListHandler(friends) {
         setFriendList(friends ?? []);
@@ -46,12 +48,18 @@ export default function Chat(props) {
         setAddFriendDialogOpen(true);
     }
 
+    const handleUserInfo = (data) => {
+        setAvatar(data.userAvatar);
+        setUserName(data.username);
+    }
+
     useEffect(() => {
         const handleAddNewFriend = (res) => {
             ChatAPI.getFriendList(friendListHandler);
         }
 
         ChatAPI.setUserID(props.userID);
+        ChatAPI.getUserInfo(handleUserInfo);
         ChatAPI.getFriendList(friendListHandler);
         ChatAPI.subscribeToAddNewFriend(handleAddNewFriend)
 
@@ -72,7 +80,7 @@ export default function Chat(props) {
                     flexGrow: 1,
                     position: "relative"
                 }}>
-                    <UserBanner name="Foo Boo"/>
+                    <UserBanner username={userName} avatar={avatar}/>
                     <Divider/>
                     <List sx={{overflow: 'auto', flexGrow: 1}}>
                         {friendList.map(friend => (
