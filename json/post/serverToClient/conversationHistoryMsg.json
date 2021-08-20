@@ -1,0 +1,14 @@
+{
+  "result": "success",
+  "data": {
+    "time": 1629266506186,
+    "messages": [{
+      "msgID": 10000000,
+      "text": "@cparagraph",
+      "hasRead": true,
+      "timeStamp": 1629266506186,
+      "senderID": 34646464777,
+      "receiverID": 34646464777
+    }]
+  }
+}

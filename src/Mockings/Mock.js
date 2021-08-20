@@ -6,6 +6,7 @@ Mock.setup({
 })
 
 Mock.mock(friendList, "post", {
+    "result": "success",
     "data": {
         "time": "@date('T')",
         "friends|5-30": [{
@@ -20,6 +21,7 @@ Mock.mock(friendList, "post", {
 });
 
 Mock.mock(conversationHistoryMsg, "post", {
+    "result": "success",
     "data": {
         "time": "@date('T')",
         "messages|10-30": [{
@@ -38,7 +40,5 @@ Mock.mock(clearUnread, "post", {
 });
 
 Mock.mock(addFriend, "post", {
-    "data": {
-        "result": "success"
-    }
+    "result": "success"
 });

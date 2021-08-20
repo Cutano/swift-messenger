@@ -1,0 +1,10 @@
+{
+  "type": "newMsg",
+  "data": {
+    "receiverID": 2132323,
+    "senderID": 23443443,
+    "timeStamp": 1629449714182,
+    "message": "rfhbfhrfhr",
+    "hasRead": false
+  }
+}

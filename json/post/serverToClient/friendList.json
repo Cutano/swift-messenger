@@ -1,0 +1,14 @@
+{
+  "result": "success",
+  "data": {
+    "time": 1629266506186,
+    "friends": [{
+      "friendID": 1629266506186,
+      "friendName": "@cname",
+      "friendAvatar": "@dataImage('250x250')",
+      "recentMsg": "@csentence",
+      "recentMsgTime": 1629266506186,
+      "unreadMsgCount": 325
+    }]
+  }
+}
