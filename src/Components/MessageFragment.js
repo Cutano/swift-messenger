@@ -2,8 +2,6 @@ import React, {useEffect, useState} from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import MessageBubble from "./MessageBubble";
-import Grid from "@material-ui/core/Grid";
-import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import ChatAPI from "../Apis/ChatAPI";

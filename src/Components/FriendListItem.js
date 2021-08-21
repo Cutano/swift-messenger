@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import {Badge, Card, CardActionArea, ListItem} from "@material-ui/core";
-import ListItemButton from "@material-ui/core/ListItemButton";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ChatAPI from "../Apis/ChatAPI";
