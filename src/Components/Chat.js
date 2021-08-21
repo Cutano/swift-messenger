@@ -60,6 +60,7 @@ export default function Chat(props) {
 
         ChatAPI.setUserID(props.userID);
         ChatAPI.getUserInfo(handleUserInfo);
+        ChatAPI.connectToWebSocketServer();
         ChatAPI.getFriendList(friendListHandler);
         ChatAPI.subscribeToAddNewFriend(handleAddNewFriend)
 

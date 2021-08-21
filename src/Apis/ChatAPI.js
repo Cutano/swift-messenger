@@ -1,16 +1,6 @@
 import {wsBase} from "./UrlBase";
 import axios from "axios";
-import {addFriend, clearUnread, conversationHistoryMsg, friendList, register, userInfo} from "./Posts";
-
-const loginData = {
-    userID: Number,
-    time: Date
-}
-
-const msgData = {
-    type: String,
-    data: Object
-}
+import {addFriend, clearUnread, conversationHistoryMsg, friendList, login, register, userInfo} from "./Posts";
 
 export default class ChatAPI {
     static userID;
@@ -87,6 +77,12 @@ export default class ChatAPI {
     static userRegister(data, registerResultHandler) {
         axios.post(register, data).then(res => {
             registerResultHandler(res.data);
+        });
+    }
+
+    static userLogin(data, loginResultHandler) {
+        axios.post(login, data).then(res => {
+            loginResultHandler(res.data);
         });
     }
 

@@ -1,5 +1,5 @@
 import Mock from 'mockjs';
-import {addFriend, clearUnread, conversationHistoryMsg, friendList, register, userInfo} from "../Apis/Posts";
+import {addFriend, clearUnread, conversationHistoryMsg, friendList, login, register, userInfo} from "../Apis/Posts";
 
 Mock.setup({
     timeout: '10-100'
@@ -49,7 +49,11 @@ Mock.mock(userInfo, "post", {
         "username": "@cname",
         "userAvatar": "@dataImage('250x250')"
     }
-})
+});
+
+Mock.mock(login, "post", {
+    "result": "success"
+});
 
 Mock.mock(clearUnread, "post", {
     "result": "success"

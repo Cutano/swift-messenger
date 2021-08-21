@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import sha1 from "js-sha1";
 
 function Copyright(props) {
     return (
@@ -23,6 +24,9 @@ function Copyright(props) {
 }
 
 export default function LoginPage() {
+    const [userID, setUserID] = React.useState();
+    const [password, setPassword] = React.useState("");
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -32,6 +36,14 @@ export default function LoginPage() {
             password: data.get('password'),
         });
     };
+
+    const handleUIDChange = (e) => {
+        setUserID(e.target.value);
+    }
+
+    const handlePwdChange = (e) => {
+        setPassword(e.target.value);
+    }
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
@@ -77,6 +89,8 @@ export default function LoginPage() {
                             name="UserID"
                             autoComplete="username"
                             autoFocus
+                            value={userID}
+                            onChange={handleUIDChange}
                         />
                         <TextField
                             margin="normal"
@@ -87,11 +101,14 @@ export default function LoginPage() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            value={password}
+                            onChange={handlePwdChange}
                         />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
+                            href={`/chat?userid=${userID}&cipher=${sha1(password)}`}
                             sx={{ mt: 3, mb: 2 }}
                         >
                             Sign In

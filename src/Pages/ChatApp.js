@@ -4,14 +4,26 @@ import Box from '@material-ui/core/Box';
 import Chat from '../Components/Chat';
 import MainAppBar from "../Components/MainAppBar";
 import {useEffect, useState} from "react";
+import ChatAPI from "../Apis/ChatAPI";
 
 export default function ChatApp() {
     const [userID, setUserID] = useState();
+    const [verified, setVerified] = useState(false);
+
+    const handleLoginResult = (data) => {
+        if (data.result === "success") {
+            setVerified(true);
+        }
+    }
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const uid = parseInt(urlParams.get('userid'));
-        if (uid || typeof (uid) === "number") setUserID(uid);
+        const pwd = urlParams.get('cipher');
+        if (uid && typeof (uid) === "number" && pwd) {
+            setUserID(uid);
+            ChatAPI.userLogin({userID: uid, password: pwd}, handleLoginResult);
+        }
         else window.location.href = "/auth/login";
 
         return function cleanup() {
@@ -22,7 +34,7 @@ export default function ChatApp() {
     return (
         <Box sx={{height: "100%", display: "flex", flexDirection: "column", overflow: "hidden"}}>
             <MainAppBar/>
-            <Chat userID={userID}/>
+            {verified && <Chat userID={userID}/>}
         </Box>
     );
 }

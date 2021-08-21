@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import UserIDForm from '../Components/UserIDForm';
 import PasswordForm from '../Components/PasswordForm';
 import {Alert, Snackbar} from "@material-ui/core";
+import sha1 from "js-sha1";
 import ChatAPI from "../Apis/ChatAPI";
 
 function Copyright(props) {
@@ -61,7 +62,7 @@ function SignUpContent() {
         } else if (activeStep === 1 && password !== "" && password === confirmedPassword) {
             const data = {
                 username: username,
-                password: password,
+                password: sha1(password),
                 userAvatar: avatar
             };
             ChatAPI.userRegister(data, handleRegisterResult);
@@ -147,7 +148,7 @@ function SignUpContent() {
                                     <span style={{fontWeight: "bold"}}>{userID}</span>},
                                     please login in the main page.
                                 </Typography>
-                                <Button fullWidth variant="contained" href={`/chat?userid=${userID}`} sx={{margin: 2}}>
+                                <Button fullWidth variant="contained" href={`/chat?userid=${userID}&cipher=${sha1(password)}`} sx={{margin: 2}}>
                                     Start Chat!
                                 </Button>
                             </React.Fragment>
