@@ -32,7 +32,7 @@ export default function MessageFragment(props) {
     }
 
     function handleEnterPressed(e) {
-        if (!disable) handleSendBtnClicked();
+        if (!disable && e.key === "Enter") handleSendBtnClicked();
     }
 
     function sendMessage() {

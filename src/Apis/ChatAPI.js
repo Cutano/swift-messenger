@@ -62,7 +62,8 @@ export default class ChatAPI {
                     else if (this.friendNewMsgHandlers.has(data.data.senderID)) {
                         // Old friend
                         this.friendNewMsgHandlers.get(data.data.senderID)(data.data);
-                        this.conversationNewMsgHandlers.get(data.data.senderID)(data.data);
+                        if (this.conversationNewMsgHandlers.has(data.data.senderID))
+                            this.conversationNewMsgHandlers.get(data.data.senderID)(data.data);
                     } else {
                         // New friend
                         if (this.addNewFriendHandler)
@@ -82,6 +83,7 @@ export default class ChatAPI {
         this.socket.addEventListener('close', (event) => {
             if (this.userStatusChangeHandler)
                 this.userStatusChangeHandler(false);
+            this.socket = new WebSocket(wsBase);
         });
     }
 

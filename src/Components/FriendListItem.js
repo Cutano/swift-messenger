@@ -47,7 +47,7 @@ export default function FriendListItem(props) {
                         </Badge>
                     </ListItemIcon>
                     <ListItemText primary={props.name} secondary={recentMsg} primaryTypographyProps={{noWrap: true}}
-                                  secondaryTypographyProps={{fontSize: 13, noWrap: true, sx: { color: props.selected === props.friendID ? "#eeeeee" : "text.secondary"}}}/>
+                                  secondaryTypographyProps={{fontSize: 13, noWrap: true, sx: { color: props.selected === props.friendID ? "#eeeeee" : "text.secondary", maxWidth: 240}}}/>
                     <ListItemText secondary={formatTime(recentMsgTime)} align="right" primaryTypographyProps={{noWrap: true}}
                                   secondaryTypographyProps={{fontSize: 10, noWrap: true, sx: { color: props.selected === props.friendID ? "#eeeeee" : "text.secondary"}}}/>
                 </ListItem>
