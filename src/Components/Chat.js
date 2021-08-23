@@ -35,13 +35,13 @@ export default function Chat(props) {
     }
 
     const handleAddFriendDialogDone = (friendID) => {
-        ChatAPI.addNewFriend(friendID);
+        ChatAPI.addNewFriend(parseInt(friendID));
         setAddFriendDialogOpen(false);
     }
 
     const handleSelectionChange = (e, friendID) => {
         setSelectedFriendID(friendID);
-        ChatAPI.clearUnreadMsg(props.friendID, handleClearUnread);
+        ChatAPI.clearUnreadMsg(friendID, handleClearUnread);
     }
 
     const handleFabClick = () => {
@@ -88,7 +88,7 @@ export default function Chat(props) {
                             <FriendListItem avatar={friend.friendAvatar} name={friend.friendName}
                                             recentMsg={friend.recentMsg}
                                             recentMsgTime={friend.recentMsgTime} unreadMsgCount={friend.unreadMsgCount}
-                                            friendID={friend.friendID} selected={selectedFriendID === friend.friendID}
+                                            friendID={friend.friendID} selected={selectedFriendID}
                                             key={friend.friendID}
                                             onClick={(e) => {
                                                 if (friend.friendID !== selectedFriendID) handleSelectionChange(e, friend.friendID);

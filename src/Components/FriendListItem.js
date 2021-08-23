@@ -17,11 +17,12 @@ export default function FriendListItem(props) {
             setIsOnline(status);
         }
 
-        function handleNewMsg(data) {
-            setUnreadMsgCount((msgCount) => (msgCount + 1));
-            setRecentMsg(data.message);
+        const handleNewMsg = data => {
+            if (props.selected !== props.friendID)
+                setUnreadMsgCount((msgCount) => (msgCount + 1));
+            setRecentMsg(data.text);
             setRecentMsgTime(data.timeStamp);
-        }
+        };
 
         ChatAPI.subscribeToFriendStatus(props.friendID, handleStatusChange);
         ChatAPI.subscribeToFriendNewMsg(props.friendID, handleNewMsg);
@@ -30,10 +31,10 @@ export default function FriendListItem(props) {
             ChatAPI.unsubscribeFromFriendStatus(props.friendID);
             ChatAPI.unsubscribeFromFriendNewMsg(props.friendID);
         };
-    }, [props.friendID]);
+    }, [props.friendID, props.selected]);
 
     return (
-        <Card elevation={props.selected ? 1:0} onClick={props.onClick} sx={{margin: 1, borderRadius: 2}}>
+        <Card elevation={props.selected === props.friendID ? 1:0} onClick={props.onClick} sx={{margin: 1, borderRadius: 2}}>
             <CardActionArea>
                 <ListItem>
                     <ListItemIcon>

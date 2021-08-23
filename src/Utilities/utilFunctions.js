@@ -6,8 +6,7 @@ export function formatTime(timeInt) {
 
     if (now.getFullYear() === msgDate.getFullYear() && now.getMonth() === msgDate.getMonth() && now.getDate() === msgDate.getDate()) {
         return `${msgDate.getHours()}:${msgDate.getMinutes() < 10 ? '0' + msgDate.getMinutes() : msgDate.getMinutes()}`;
-    }
-    else if (now.getFullYear() === msgDate.getFullYear() && now.getMonth() !== msgDate.getMonth())
+    } else if ((now.getFullYear() === msgDate.getFullYear() && now.getMonth() !== msgDate.getMonth()) || (now.getFullYear() === msgDate.getFullYear() && now.getMonth() === msgDate.getMonth() && now.getDate() !== msgDate.getDate()))
         return `${ref[msgDate.getMonth()]} ${msgDate.getDate()}`;
     else return `${ref[msgDate.getMonth()]} ${msgDate.getFullYear()}`
 }

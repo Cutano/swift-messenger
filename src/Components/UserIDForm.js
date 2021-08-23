@@ -10,6 +10,8 @@ import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 import FilePondPluginImageResize from 'filepond-plugin-image-resize';
+import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
+import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import {useState} from "react";
 
@@ -18,7 +20,9 @@ registerPlugin(FilePondPluginImageExifOrientation,
     FilePondPluginFileValidateSize,
     FilePondPluginFileValidateType,
     FilePondPluginFileEncode,
-    FilePondPluginImageResize);
+    FilePondPluginImageResize,
+    FilePondPluginImageCrop,
+    FilePondPluginImageTransform);
 
 export default function UserIDForm(props) {
     const [files, setFiles] = useState([]);
@@ -40,8 +44,8 @@ export default function UserIDForm(props) {
                         onupdatefiles={setFiles}
                         allowMultiple={false}
                         stylePanelLayout="compact circle"
-                        imageResizeTargetWidth={250}
-                        imageResizeTargetHeight={250}
+                        imageResizeTargetWidth={100}
+                        imageResizeTargetHeight={100}
                         imagePreviewHeight={70}
                         imageCropAspectRatio="1:1"
                         maxFileSize="5MB"

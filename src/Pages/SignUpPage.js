@@ -15,6 +15,7 @@ import PasswordForm from '../Components/PasswordForm';
 import {Alert, Snackbar} from "@material-ui/core";
 import sha1 from "js-sha1";
 import ChatAPI from "../Apis/ChatAPI";
+import {Link as RouteLink} from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -147,7 +148,7 @@ function SignUpContent() {
                                     <span style={{fontWeight: "bold"}}>{userID}</span>},
                                     please login in the main page.
                                 </Typography>
-                                <Button fullWidth variant="contained" href={`/chat?userid=${userID}&cipher=${sha1(password)}`} sx={{margin: 2}}>
+                                <Button component={RouteLink} fullWidth variant="contained" to={`/chat?userid=${userID}&cipher=${sha1(password)}`} sx={{margin: 2}}>
                                     Start Chat!
                                 </Button>
                             </React.Fragment>

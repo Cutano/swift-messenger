@@ -24,7 +24,7 @@ export default function ChatApp() {
             setUserID(uid);
             ChatAPI.userLogin({userID: uid, password: pwd}, handleLoginResult);
         }
-        else window.location.href = "/auth/login";
+        else window.location.href = "/";
 
         return function cleanup() {
             setUserID(undefined);

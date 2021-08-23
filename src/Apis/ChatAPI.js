@@ -24,12 +24,18 @@ export default class ChatAPI {
         this.socket = new WebSocket(wsBase);
         // Connection opened
         this.socket.addEventListener('open', (event) => {
-            this.socket.send('Hello Server!');
+            this.socket.send(JSON.stringify({
+                    type: "userLogin",
+                    data: {
+                        userID: this.userID,
+                        timeStamp: Date.now()
+                    }
+                }))
         });
 
         // Listen for messages
         this.socket.addEventListener('message', (event) => {
-            const data = event.data;
+            const data = JSON.parse(event.data);
             console.log(data);
             switch (data.type) {
                 case "friendLogin":
@@ -49,7 +55,11 @@ export default class ChatAPI {
                         this.userStatusChangeHandler(false);
                     break;
                 case "newMsg":
-                    if (this.friendNewMsgHandlers.has(data.data.senderID)) {
+                    if (data.data.senderID === this.userID) {
+                        this.friendNewMsgHandlers.get(data.data.receiverID)(data.data);
+                        this.conversationNewMsgHandlers.get(data.data.receiverID)(data.data);
+                    }
+                    else if (this.friendNewMsgHandlers.has(data.data.senderID)) {
                         // Old friend
                         this.friendNewMsgHandlers.get(data.data.senderID)(data.data);
                         this.conversationNewMsgHandlers.get(data.data.senderID)(data.data);
@@ -70,7 +80,8 @@ export default class ChatAPI {
         });
 
         this.socket.addEventListener('close', (event) => {
-            console.log('Closed', event.data);
+            if (this.userStatusChangeHandler)
+                this.userStatusChangeHandler(false);
         });
     }
 
@@ -86,6 +97,10 @@ export default class ChatAPI {
         });
     }
 
+    static userLogout(data) {
+        this.socket.send(JSON.stringify(data));
+    }
+
     static getUserInfo(userInfoHandler) {
         axios.post(userInfo, {userID: this.userID}).then(res => {
            if (res.data.result === "success") {
@@ -95,17 +110,17 @@ export default class ChatAPI {
     }
 
     static addNewFriend(friendID) {
-        axios.post(addFriend, {userID: this.userID, friendID: friendID}).then(this.addNewFriendHandler);
+        axios.post(addFriend, {userID: this.userID, friendID: parseInt(friendID)}).then(this.addNewFriendHandler);
     }
 
     static sendMessage(friendID, text) {
         const data = {
             type: "newMsg",
             data: {
-                receiverID: friendID,
+                receiverID: parseInt(friendID),
                 senderID: this.userID,
                 timeStamp: Date.now(),
-                message: text,
+                text: text,
                 hasRead: false
             }
         };
@@ -114,7 +129,7 @@ export default class ChatAPI {
 
     static getHistoryMsg(friendID, conversationHistoryMsgHandler) {
         axios.post(conversationHistoryMsg, {
-            friendID: friendID,
+            friendID: parseInt(friendID),
             userID: this.userID
         }).then((res) => {
             res.data.data.messages.sort((msg1, msg2) => {
@@ -127,7 +142,7 @@ export default class ChatAPI {
     }
 
     static clearUnreadMsg(friendID, handleClearUnread) {
-        axios.post(clearUnread, {userID: this.userID, friendID}).then((res) => {
+        axios.post(clearUnread, {userID: this.userID, friendID: parseInt(friendID)}).then((res) => {
             handleClearUnread(res.data.result);
         });
     }

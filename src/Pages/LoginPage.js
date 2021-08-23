@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import sha1 from "js-sha1";
+import {Link as RouteLink} from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -105,17 +106,18 @@ export default function LoginPage() {
                             onChange={handlePwdChange}
                         />
                         <Button
+                            component={RouteLink}
                             type="submit"
                             fullWidth
                             variant="contained"
-                            href={`/chat?userid=${userID}&cipher=${sha1(password)}`}
+                            to={`/chat?userid=${userID}&cipher=${sha1(password)}`}
                             sx={{ mt: 3, mb: 2 }}
                         >
                             Sign In
                         </Button>
                         <Grid container>
                             <Grid item>
-                                <Link href="/auth/register" variant="body2">
+                                <Link component={RouteLink} to="/auth/register" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

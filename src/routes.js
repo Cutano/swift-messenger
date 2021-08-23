@@ -1,29 +1,32 @@
-import React from 'react';
+import React, {lazy} from 'react';
 import ChatApp from "./Pages/ChatApp";
-import { Navigate } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import LoginPage from "./Pages/LoginPage"
 import SignUpPage from "./Pages/SignUpPage"
 
 const routes = [
     {
-        path: 'chat',
-        element: <ChatApp/>
-    },
-    {
-        path: 'auth/login',
-        element: <LoginPage/>
-    },
-    {
-        path: 'auth/register',
-        element: <SignUpPage/>
-    },
-    {
         path: '/',
-        element: <Navigate to="auth/login"/>
+        component: () => <Redirect to="/auth/login"/>
+    },
+    {
+        path: '/chat',
+        exact: true,
+        component: <ChatApp/>
+    },
+    {
+        path: '/auth/login',
+        exact: true,
+        component: <LoginPage/>
+    },
+    {
+        path: '/auth/register',
+        exact: true,
+        component: <SignUpPage/>
     },
     {
         path: '*',
-        element: <Navigate to="auth/login"/>
+        component: <Redirect to="/auth/login"/>
     }
 ];
 

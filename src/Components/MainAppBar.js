@@ -5,14 +5,21 @@ import ChatAPI from "../Apis/ChatAPI";
 
 export default function MainAppBar() {
     const handleLogoutBtnClicked = () => {
+        ChatAPI.userLogout({
+            type: "userLogout",
+            data: {
+                userID: ChatAPI.getUserID(),
+                timeStamp: Date.now()
+            }
+        });
         ChatAPI.setUserID(undefined);
-        window.location.href = "/auth/login";
+        window.location.href = "/";
     }
 
     return (
         <AppBar position="sticky" sx={{height: 64, flex: "0 0 auto", overflow: "auto"}}>
             <Toolbar>
-                <Typography variant="h6" component="div" noWrap={true} sx={{ flexGrow: 1, userSelect: "none" }}>
+                <Typography variant="h6" component="div" noWrap={true} sx={{flexGrow: 1, userSelect: "none"}}>
                     Swift Messenger
                 </Typography>
                 <Button
@@ -20,7 +27,7 @@ export default function MainAppBar() {
                     edge="end"
                     color="inherit"
                     variant="outlined"
-                    sx={{ mr: 2 }}
+                    sx={{mr: 2}}
                     onClick={handleLogoutBtnClicked}
                 >
                     LOGOUT
