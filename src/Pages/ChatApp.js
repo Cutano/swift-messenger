@@ -5,15 +5,23 @@ import Chat from '../Components/Chat';
 import MainAppBar from "../Components/MainAppBar";
 import {useEffect, useState} from "react";
 import ChatAPI from "../Apis/ChatAPI";
+import {Paper, ThemeProvider} from "@material-ui/core";
+import {light, dark} from "../theme";
 
 export default function ChatApp() {
     const [userID, setUserID] = useState();
     const [verified, setVerified] = useState(false);
+    const [darkTheme, setDarkTheme] = React.useState(true);
 
     const handleLoginResult = (data) => {
         if (data.result === "success") {
             setVerified(true);
         }
+    }
+
+    const handleToggleTheme = () => {
+        setDarkTheme((darkTheme) => (!darkTheme));
+
     }
 
     useEffect(() => {
@@ -23,8 +31,7 @@ export default function ChatApp() {
         if (uid && typeof (uid) === "number" && pwd) {
             setUserID(uid);
             ChatAPI.userLogin({userID: uid, password: pwd}, handleLoginResult);
-        }
-        else window.location.href = "/";
+        } else window.location.href = "/";
 
         return function cleanup() {
             setUserID(undefined);
@@ -32,9 +39,11 @@ export default function ChatApp() {
     }, []);
 
     return (
-        <Box sx={{height: "100%", display: "flex", flexDirection: "column", overflow: "hidden"}}>
-            <MainAppBar/>
-            {verified && <Chat userID={userID}/>}
-        </Box>
+        <ThemeProvider theme={darkTheme ? dark : light}>
+            <Paper square sx={{height: "100%", display: "flex", flexDirection: "column", overflow: "hidden"}}>
+                <MainAppBar darkTheme={darkTheme} onToggle={handleToggleTheme}/>
+                {verified && <Chat userID={userID}/>}
+            </Paper>
+        </ThemeProvider>
     );
 }

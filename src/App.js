@@ -17,27 +17,25 @@ import SignUpPage from "./Pages/SignUpPage"
 const App = () => {
 
     return (
-        <ThemeProvider theme={theme}>
-            <React.StrictMode>
-                <CssBaseline />
-                <Router>
-                    <Switch>
-                        <Route path="/chat">
-                            <ChatApp />
-                        </Route>
-                        <Route path="/auth/login">
-                            <LoginPage />
-                        </Route>
-                        <Route path="/auth/register">
-                            <SignUpPage />
-                        </Route>
-                        <Route path="/">
-                            <Redirect to="/auth/login"/>
-                        </Route>
-                    </Switch>
-                </Router>
-            </React.StrictMode>
-        </ThemeProvider>
+        <React.StrictMode>
+            <CssBaseline />
+            <Router>
+                <Switch>
+                    <Route path="/chat">
+                        <ChatApp />
+                    </Route>
+                    <Route path="/auth/login">
+                        <LoginPage />
+                    </Route>
+                    <Route path="/auth/register">
+                        <SignUpPage />
+                    </Route>
+                    <Route path="/">
+                        <Redirect to="/auth/login"/>
+                    </Route>
+                </Switch>
+            </Router>
+        </React.StrictMode>
     );
 };
 

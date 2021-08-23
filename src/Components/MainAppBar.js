@@ -1,9 +1,11 @@
 import React from "react";
-import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
-import {Logout} from "@material-ui/icons";
+import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {Brightness7, Brightness3, Logout} from "@material-ui/icons";
 import ChatAPI from "../Apis/ChatAPI";
 
-export default function MainAppBar() {
+export default function MainAppBar(props) {
+    const icon = !props.darkTheme ? <Brightness7 /> : <Brightness3 />;
+
     const handleLogoutBtnClicked = () => {
         ChatAPI.userLogout({
             type: "userLogout",
@@ -22,6 +24,9 @@ export default function MainAppBar() {
                 <Typography variant="h6" component="div" noWrap={true} sx={{flexGrow: 1, userSelect: "none"}}>
                     Swift Messenger
                 </Typography>
+                <IconButton color="inherit" onClick={props.onToggle} sx={{marginRight: 2}}>
+                    {icon}
+                </IconButton>
                 <Button
                     startIcon={<Logout/>}
                     edge="end"

@@ -34,9 +34,10 @@ export default function FriendListItem(props) {
     }, [props.friendID, props.selected]);
 
     return (
-        <Card elevation={props.selected === props.friendID ? 1:0} onClick={props.onClick} sx={{margin: 1, borderRadius: 2}}>
+        <Card elevation={props.selected === props.friendID ? 1:0} onClick={props.onClick} sx={{margin: 1, borderRadius: 2, backgroundColor: props.selected === props.friendID ? "friendItem.bg" : "",
+            color: props.selected === props.friendID ? "#ffffff" : "text.primary"}}>
             <CardActionArea>
-                <ListItem>
+                <ListItem sx={{minHeight: 71}}>
                     <ListItemIcon>
                         <Badge variant="dot" color="online" invisible={!isOnline}
                                anchorOrigin={{vertical: "bottom", horizontal: 'right'}}>
@@ -46,9 +47,9 @@ export default function FriendListItem(props) {
                         </Badge>
                     </ListItemIcon>
                     <ListItemText primary={props.name} secondary={recentMsg} primaryTypographyProps={{noWrap: true}}
-                                  secondaryTypographyProps={{fontSize: 13, noWrap: true}}/>
+                                  secondaryTypographyProps={{fontSize: 13, noWrap: true, sx: { color: props.selected === props.friendID ? "#eeeeee" : "text.secondary"}}}/>
                     <ListItemText secondary={formatTime(recentMsgTime)} align="right" primaryTypographyProps={{noWrap: true}}
-                                  secondaryTypographyProps={{fontSize: 10, noWrap: true}}/>
+                                  secondaryTypographyProps={{fontSize: 10, noWrap: true, sx: { color: props.selected === props.friendID ? "#eeeeee" : "text.secondary"}}}/>
                 </ListItem>
             </CardActionArea>
         </Card>

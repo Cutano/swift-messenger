@@ -1,11 +1,12 @@
-import { red } from '@material-ui/core/colors';
+import {blue, purple, red} from '@material-ui/core/colors';
 import { createTheme } from '@material-ui/core/styles';
 
 // A custom theme for this app
-const theme = createTheme({
+export const light = createTheme({
   palette: {
+    mode: "light",
     primary: {
-      main: '#556cd6',
+      main: blue.A200,
     },
     secondary: {
       main: '#19857b',
@@ -16,13 +17,41 @@ const theme = createTheme({
     online: {
       main: '#67b955',
     },
-    msgBubbleSelf: {
-      main: '#aa89ff'
+    msgBubble: {
+      self: '#51a7ff'
     },
-    msgBubbleFriend: {
-      main: '#eaeaea'
+    msgText: {
+      self: '#ffffff'
+    },
+    friendItem: {
+      bg: '#51a7ff'
     }
   },
 });
 
-export default theme;
+export const dark = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#9978ee",
+    },
+    secondary: {
+      main: '#19857b',
+    },
+    error: {
+      main: red.A400,
+    },
+    online: {
+      main: '#67b955',
+    },
+    msgBubble: {
+      self: '#9978ee'
+    },
+    msgText: {
+      self: '#ffffff'
+    },
+    friendItem: {
+      bg: '#9978ee'
+    }
+  },
+});
