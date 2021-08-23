@@ -12,6 +12,11 @@ export default function FriendListItem(props) {
     const [recentMsg, setRecentMsg] = useState(props.recentMsg ?? "");
     const [recentMsgTime, setRecentMsgTime] = useState(props.recentMsgTime ?? 1629266506186);
 
+    const handleOnClick = (e) => {
+        setUnreadMsgCount(0);
+        props.onClick(e);
+    }
+
     useEffect(() => {
         function handleStatusChange(status) {
             setIsOnline(status);
@@ -34,7 +39,7 @@ export default function FriendListItem(props) {
     }, [props.friendID, props.selected]);
 
     return (
-        <Card elevation={props.selected === props.friendID ? 1:0} onClick={props.onClick} sx={{margin: 1, borderRadius: 2, backgroundColor: props.selected === props.friendID ? "friendItem.bg" : "",
+        <Card elevation={props.selected === props.friendID ? 1:0} onClick={handleOnClick} sx={{margin: 1, borderRadius: 2, backgroundColor: props.selected === props.friendID ? "friendItem.bg" : "",
             color: props.selected === props.friendID ? "#ffffff" : "text.primary"}}>
             <CardActionArea>
                 <ListItem sx={{minHeight: 71}}>

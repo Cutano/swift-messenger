@@ -25,9 +25,9 @@ export default function Chat(props) {
 
     const handleClearUnread = (result) => {
         // May have side effect
-        if (result === "success") {
-            ChatAPI.getFriendList(friendListHandler);
-        }
+        // if (result === "success") {
+        //     ChatAPI.getFriendList(friendListHandler);
+        // }
     }
 
     const handleAddFriendDialogCancel = () => {
