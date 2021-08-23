@@ -25,8 +25,9 @@ function Copyright(props) {
 }
 
 export default function LoginPage() {
-    const [userID, setUserID] = React.useState();
+    const [userID, setUserID] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [disabled, setDisabled] = React.useState(true);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -39,15 +40,29 @@ export default function LoginPage() {
     };
 
     const handleUIDChange = (e) => {
-        setUserID(e.target.value);
+        setUserID((userID) => {
+            userID = e.target.value;
+            if (userID === null || userID === "" || password === null || password === "") setDisabled(true);
+            else {
+                setDisabled(false);
+            }
+            return userID;
+        });
     }
 
     const handlePwdChange = (e) => {
-        setPassword(e.target.value);
+        setPassword((password) => {
+            password = e.target.value;
+            if (userID === null || userID === "" || password === null || password === "") setDisabled(true);
+            else {
+                setDisabled(false);
+            }
+            return password;
+        });
     }
 
     return (
-        <Grid container component="main" sx={{ height: '100vh' }}>
+        <Grid container component="main" sx={{height: '100vh'}}>
             <Grid
                 item
                 xs={false}
@@ -74,13 +89,13 @@ export default function LoginPage() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, backgroundColor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
+                    <Avatar sx={{m: 1, backgroundColor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                         <TextField
                             margin="normal"
                             required
@@ -108,10 +123,11 @@ export default function LoginPage() {
                         <Button
                             component={RouteLink}
                             type="submit"
+                            disabled={disabled}
                             fullWidth
                             variant="contained"
                             to={`/chat?userid=${userID}&cipher=${sha1(password)}`}
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{mt: 3, mb: 2}}
                         >
                             Sign In
                         </Button>
@@ -122,7 +138,7 @@ export default function LoginPage() {
                                 </Link>
                             </Grid>
                         </Grid>
-                        <Copyright sx={{ mt: 5 }} />
+                        <Copyright sx={{mt: 5}}/>
                     </Box>
                 </Box>
             </Grid>

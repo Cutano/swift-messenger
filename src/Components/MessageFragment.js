@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import MessageBubble from "./MessageBubble";
@@ -13,6 +13,9 @@ export default function MessageFragment(props) {
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(true);
+    const [disable, setDisable] = useState(true);
+
+    const messagesEndRef = useRef(null)
 
     function clearScreen() {
         setMessages([]);
@@ -20,7 +23,16 @@ export default function MessageFragment(props) {
     }
 
     function handleTextChange(e) {
-        setText(e.target.value);
+        setText((text) => {
+            text = e.target.value;
+            if (text === null || text.trim() === "") setDisable(true);
+            else setDisable(false)
+            return text;
+        });
+    }
+
+    function handleEnterPressed(e) {
+        if (!disable) handleSendBtnClicked();
     }
 
     function sendMessage() {
@@ -32,14 +44,20 @@ export default function MessageFragment(props) {
         setText("");
     }
 
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+
     useEffect(() => {
-        function handleNewMsg(newMsg) {
+        const handleNewMsg = (newMsg) => {
             setMessages((messages) => ([...messages, newMsg]));
+            scrollToBottom();
         }
 
-        function historyMsgHandler(messages) {
+        const historyMsgHandler = (messages) => {
             setLoading(false);
             setMessages(messages);
+            scrollToBottom();
         }
 
         clearScreen();
@@ -70,6 +88,9 @@ export default function MessageFragment(props) {
                                        msgTime={msg.timeStamp}/>
                     </ListItem>
                 ))}
+                <div style={{ float:"left", clear: "both" }}
+                     ref={messagesEndRef}>
+                </div>
             </List>
             <Divider/>
             <Box sx={{display: "flex", flexDirection: "row"}}>
@@ -79,10 +100,11 @@ export default function MessageFragment(props) {
                     label="Say Something"
                     fullWidth
                     onChange={handleTextChange}
+                    onKeyPress={handleEnterPressed}
                     value={text}
                     sx={{flexGrow: 1, margin: 1}}
                 />
-                <Button startIcon={<Send/>} variant="outlined" onClick={handleSendBtnClicked} sx={{margin: 1}}>
+                <Button disabled={disable} startIcon={<Send/>} variant="outlined" onClick={handleSendBtnClicked} sx={{margin: 1}}>
                     SEND
                 </Button>
             </Box>
