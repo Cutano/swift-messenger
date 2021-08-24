@@ -54,7 +54,7 @@ export default function Chat(props) {
     }
 
     useEffect(() => {
-        const handleAddNewFriend = (res) => {
+        const handleAddNewFriend = (friendID) => {
             ChatAPI.getFriendList(friendListHandler);
         }
 

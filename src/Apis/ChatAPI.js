@@ -66,8 +66,10 @@ export default class ChatAPI {
                             this.conversationNewMsgHandlers.get(data.data.senderID)(data.data);
                     } else {
                         // New friend
-                        if (this.addNewFriendHandler)
-                            this.addNewFriendHandler()
+                        if (this.addNewFriendHandler) {
+                            this.addNewFriendHandler(data.data.senderID);
+                            // this.friendStatusChangeHandlers.get(data.data.senderID)(true);
+                        }
                     }
                     break;
                 // case  "historyMsg":

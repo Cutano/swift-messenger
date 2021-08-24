@@ -24,7 +24,7 @@ export default function MainAppBar(props) {
                 <Typography variant="h6" component="div" noWrap={true} sx={{flexGrow: 1, userSelect: "none"}}>
                     Swift Messenger
                 </Typography>
-                <IconButton color="inherit" onClick={props.onToggle} sx={{marginRight: 2}}>
+                <IconButton color="inherit" onClick={props.onToggle} sx={{marginRight: 3}}>
                     {icon}
                 </IconButton>
                 <Button

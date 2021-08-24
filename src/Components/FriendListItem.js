@@ -23,8 +23,10 @@ export default function FriendListItem(props) {
         }
 
         const handleNewMsg = data => {
-            if (props.selected !== props.friendID)
+            if (props.selected !== props.friendID) {
                 setUnreadMsgCount((msgCount) => (msgCount + 1));
+                setIsOnline(true);
+            }
             setRecentMsg(data.text);
             setRecentMsgTime(data.timeStamp);
         };
@@ -39,8 +41,10 @@ export default function FriendListItem(props) {
     }, [props.friendID, props.selected]);
 
     return (
-        <Card elevation={props.selected === props.friendID ? 1:0} onClick={handleOnClick} sx={{margin: 1, borderRadius: 2, backgroundColor: props.selected === props.friendID ? "friendItem.bg" : "",
-            color: props.selected === props.friendID ? "#ffffff" : "text.primary"}}>
+        <Card elevation={props.selected === props.friendID ? 1 : 0} onClick={handleOnClick} sx={{
+            margin: 1, borderRadius: 2, backgroundColor: props.selected === props.friendID ? "friendItem.bg" : "",
+            color: props.selected === props.friendID ? "#ffffff" : "text.primary"
+        }}>
             <CardActionArea>
                 <ListItem sx={{minHeight: 71}}>
                     <ListItemIcon>
@@ -52,9 +56,21 @@ export default function FriendListItem(props) {
                         </Badge>
                     </ListItemIcon>
                     <ListItemText primary={props.name} secondary={recentMsg} primaryTypographyProps={{noWrap: true}}
-                                  secondaryTypographyProps={{fontSize: 13, noWrap: true, sx: { color: props.selected === props.friendID ? "#eeeeee" : "text.secondary", maxWidth: 240}}}/>
-                    <ListItemText secondary={formatTime(recentMsgTime)} align="right" primaryTypographyProps={{noWrap: true}}
-                                  secondaryTypographyProps={{fontSize: 10, noWrap: true, sx: { color: props.selected === props.friendID ? "#eeeeee" : "text.secondary"}}}/>
+                                  secondaryTypographyProps={{
+                                      fontSize: 13,
+                                      noWrap: true,
+                                      sx: {
+                                          color: props.selected === props.friendID ? "#eeeeee" : "text.secondary",
+                                          maxWidth: 240
+                                      }
+                                  }}/>
+                    <ListItemText secondary={formatTime(recentMsgTime)} align="right"
+                                  primaryTypographyProps={{noWrap: true}}
+                                  secondaryTypographyProps={{
+                                      fontSize: 10,
+                                      noWrap: true,
+                                      sx: {color: props.selected === props.friendID ? "#eeeeee" : "text.secondary"}
+                                  }}/>
                 </ListItem>
             </CardActionArea>
         </Card>
