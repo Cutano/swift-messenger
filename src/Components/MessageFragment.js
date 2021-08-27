@@ -77,7 +77,7 @@ export default function MessageFragment(props) {
 
     return (
         <>
-            <Box>
+            <Box sx={{zIndex: 2}}>
                 <Card>
                     <CardActionArea onClick={(e) => {setUserDetailOpen(true)}}>
                         <List>
@@ -127,22 +127,23 @@ export default function MessageFragment(props) {
                      ref={messagesEndRef}>
                 </div>
             </List>
-            <Divider/>
-            <Box sx={{display: "flex", flexDirection: "row"}}>
-                <TextField
-                    id="outlined-basic"
-                    variant="outlined"
-                    label="Say Something"
-                    fullWidth
-                    onChange={handleTextChange}
-                    onKeyPress={handleEnterPressed}
-                    value={text}
-                    sx={{flexGrow: 1, margin: 1}}
-                />
-                <Button disabled={disable} startIcon={<Send/>} variant="outlined" onClick={handleSendBtnClicked}
-                        sx={{margin: 1}}>
-                    SEND
-                </Button>
+            <Box>
+                <Card sx={{display: "flex", flexDirection: "row"}}>
+                    <TextField
+                        id="outlined-basic"
+                        variant="outlined"
+                        label="Say Something"
+                        fullWidth
+                        onChange={handleTextChange}
+                        onKeyPress={handleEnterPressed}
+                        value={text}
+                        sx={{flexGrow: 1, margin: 1}}
+                    />
+                    <Button disabled={disable} startIcon={<Send/>} variant="outlined" onClick={handleSendBtnClicked}
+                            sx={{margin: 1}}>
+                        SEND
+                    </Button>
+                </Card>
             </Box>
             <UserDetail open={userDetailOpen} avatar={props.friendAvatar} userID={props.friendID} username={props.friendName} onClose={handleDialogClose}/>
         </>

@@ -69,7 +69,7 @@ export default function LoginPage() {
                 sm={4}
                 md={7}
                 sx={{
-                    backgroundImage: 'url(https://source.unsplash.com/random)',
+                    backgroundImage: 'url(https://tva4.sinaimg.cn/large/87c01ec7gy1fsnqqu8ad9j21kw0w0k7u.jpg)',
                     backgroundRepeat: 'no-repeat',
                     backgroundColor: (theme) =>
                         theme.palette.mode === 'light'

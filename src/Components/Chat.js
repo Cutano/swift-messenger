@@ -82,7 +82,8 @@ export default function Chat(props) {
                     display: "flex",
                     flexDirection: "column",
                     flexGrow: 1,
-                    position: "relative"
+                    position: "relative",
+                    zIndex: 3
                 }}>
                     <UserBanner username={userName} avatar={avatar}/>
                     <Divider/>
