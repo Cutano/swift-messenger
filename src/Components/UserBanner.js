@@ -24,7 +24,7 @@ export default function UserBanner(props) {
 
     return (
         <List>
-            <ListItem button key={props.userID}>
+            <ListItem key={props.userID}>
                 <ListItemIcon>
                     <Badge variant="dot" color="online" invisible={!isOnline}
                            anchorOrigin={{vertical: "bottom", horizontal: 'right'}}>
@@ -35,7 +35,7 @@ export default function UserBanner(props) {
                         />
                     </Badge>
                 </ListItemIcon>
-                <ListItemText primary={props.username}/>
+                <ListItemText primary={props.username} sx={{userSelect: "none"}}/>
             </ListItem>
         </List>
     );

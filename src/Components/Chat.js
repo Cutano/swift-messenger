@@ -11,6 +11,7 @@ import UserBanner from "./UserBanner";
 import MessageFragment from "./MessageFragment";
 import {Add} from "@material-ui/icons";
 import AddFriendDialog from "./AddFriendDialog";
+import {Fade, ListItem, Skeleton} from "@material-ui/core";
 
 export default function Chat(props) {
     const [selectedFriendID, setSelectedFriendID] = useState(-1);
@@ -18,9 +19,11 @@ export default function Chat(props) {
     const [addFriendDialogOpen, setAddFriendDialogOpen] = useState(false);
     const [avatar, setAvatar] = useState("");
     const [userName, setUserName] = useState("");
+    const [loading, setLoading] = useState(true);
 
     function friendListHandler(friends) {
         setFriendList(friends ?? []);
+        setLoading(false);
     }
 
     const handleClearUnread = (result) => {
@@ -83,18 +86,28 @@ export default function Chat(props) {
                 }}>
                     <UserBanner username={userName} avatar={avatar}/>
                     <Divider/>
-                    <List sx={{overflow: 'auto', flexGrow: 1}}>
-                        {friendList.map(friend => (
-                            <FriendListItem avatar={friend.friendAvatar} name={friend.friendName}
-                                            recentMsg={friend.recentMsg}
-                                            recentMsgTime={friend.recentMsgTime} unreadMsgCount={friend.unreadMsgCount}
-                                            friendID={friend.friendID} selected={selectedFriendID}
-                                            key={friend.friendID}
-                                            onClick={(e) => {
-                                                if (friend.friendID !== selectedFriendID) handleSelectionChange(e, friend.friendID);
-                                            }}/>
-                        ))}
-                    </List>
+                    <Fade in={true}>
+                        <List sx={{overflow: 'auto', flexGrow: 1}}>
+                            {loading ? (
+                                <>
+                                    {[1, 2, 3, 4, 5, 6, 7].map(item => (
+                                        <ListItem key={item}>
+                                            <Skeleton variant="rectangular" height={71} width={600} sx={{borderRadius: 2}}/>
+                                        </ListItem>
+                                    ))}
+                                </>
+                            ) : (friendList.map(friend => (
+                                <FriendListItem avatar={friend.friendAvatar} name={friend.friendName}
+                                                recentMsg={friend.recentMsg}
+                                                recentMsgTime={friend.recentMsgTime} unreadMsgCount={friend.unreadMsgCount}
+                                                friendID={friend.friendID} selected={selectedFriendID}
+                                                key={friend.friendID}
+                                                onClick={(e) => {
+                                                    if (friend.friendID !== selectedFriendID) handleSelectionChange(e, friend.friendID);
+                                                }}/>
+                            )))}
+                        </List>
+                    </Fade>
                     <Fab color="primary" sx={{position: "absolute", bottom: 20, right: 30}} onClick={handleFabClick}>
                         <Add/>
                     </Fab>
