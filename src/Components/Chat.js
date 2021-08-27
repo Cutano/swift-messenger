@@ -14,7 +14,7 @@ import AddFriendDialog from "./AddFriendDialog";
 import {Fade, ListItem, Skeleton} from "@material-ui/core";
 
 export default function Chat(props) {
-    const [selectedFriendID, setSelectedFriendID] = useState(-1);
+    const [selectedFriend, setSelectedFriend] = useState(null);
     const [friendList, setFriendList] = useState([]);
     const [addFriendDialogOpen, setAddFriendDialogOpen] = useState(false);
     const [avatar, setAvatar] = useState("");
@@ -42,9 +42,9 @@ export default function Chat(props) {
         setAddFriendDialogOpen(false);
     }
 
-    const handleSelectionChange = (e, friendID) => {
-        setSelectedFriendID(friendID);
-        ChatAPI.clearUnreadMsg(friendID, handleClearUnread);
+    const handleSelectionChange = (e, friend) => {
+        setSelectedFriend(friend);
+        ChatAPI.clearUnreadMsg(friend.friendID, handleClearUnread);
     }
 
     const handleFabClick = () => {
@@ -92,18 +92,21 @@ export default function Chat(props) {
                                 <>
                                     {[1, 2, 3, 4, 5, 6, 7].map(item => (
                                         <ListItem key={item}>
-                                            <Skeleton variant="rectangular" height={71} width={600} sx={{borderRadius: 2}}/>
+                                            <Skeleton variant="rectangular" height={71} width={600}
+                                                      sx={{borderRadius: 2}}/>
                                         </ListItem>
                                     ))}
                                 </>
                             ) : (friendList.map(friend => (
                                 <FriendListItem avatar={friend.friendAvatar} name={friend.friendName}
                                                 recentMsg={friend.recentMsg}
-                                                recentMsgTime={friend.recentMsgTime} unreadMsgCount={friend.unreadMsgCount}
-                                                friendID={friend.friendID} selected={selectedFriendID}
+                                                recentMsgTime={friend.recentMsgTime}
+                                                unreadMsgCount={friend.unreadMsgCount}
+                                                friendID={friend.friendID}
+                                                selected={selectedFriend === null ? -1 : selectedFriend.friendID}
                                                 key={friend.friendID}
                                                 onClick={(e) => {
-                                                    if (friend.friendID !== selectedFriendID) handleSelectionChange(e, friend.friendID);
+                                                    if (selectedFriend === null || friend.friendID !== selectedFriend.friendID) handleSelectionChange(e, friend);
                                                 }}/>
                             )))}
                         </List>
@@ -115,7 +118,9 @@ export default function Chat(props) {
             </Grid>
             <Grid item xl={9} md={8} xs={7}
                   sx={{bottom: 0, height: "100%", display: "flex", flexDirection: "column", minHeight: "min-content"}}>
-                {selectedFriendID !== -1 && <MessageFragment friendID={selectedFriendID}/>}
+                {selectedFriend !== null &&
+                <MessageFragment friendID={selectedFriend.friendID} friendName={selectedFriend.friendName}
+                                 friendAvatar={selectedFriend.friendAvatar}/>}
             </Grid>
             <AddFriendDialog handleCancel={handleAddFriendDialogCancel} handleDone={handleAddFriendDialogDone}
                              open={addFriendDialogOpen}/>

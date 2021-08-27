@@ -5,17 +5,23 @@ import MessageBubble from "./MessageBubble";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import ChatAPI from "../Apis/ChatAPI";
-import {Button, Fade, LinearProgress, Skeleton} from "@material-ui/core";
+import {Avatar, Button, Card, CardActionArea, ListItemIcon, ListItemText, Paper, Skeleton} from "@material-ui/core";
 import {Send} from "@material-ui/icons";
 import Box from "@material-ui/core/Box";
+import UserDetail from "./UserDetail";
 
 export default function MessageFragment(props) {
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(true);
     const [disable, setDisable] = useState(true);
+    const [userDetailOpen, setUserDetailOpen] = useState(false);
 
-    const messagesEndRef = useRef(null)
+    const messagesEndRef = useRef(null);
+
+    const handleDialogClose = () => {
+        setUserDetailOpen(false);
+    }
 
     function clearScreen() {
         setMessages([]);
@@ -71,6 +77,20 @@ export default function MessageFragment(props) {
 
     return (
         <>
+            <Box>
+                <Card>
+                    <CardActionArea onClick={(e) => {setUserDetailOpen(true)}}>
+                        <List>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <Avatar src={props.friendAvatar}/>
+                                </ListItemIcon>
+                                <ListItemText primary={props.friendName}/>
+                            </ListItem>
+                        </List>
+                    </CardActionArea>
+                </Card>
+            </Box>
             <List sx={{overflow: 'auto', flexGrow: 1}}>
                 {loading ? (
                     <>
@@ -124,6 +144,7 @@ export default function MessageFragment(props) {
                     SEND
                 </Button>
             </Box>
+            <UserDetail open={userDetailOpen} avatar={props.friendAvatar} userID={props.friendID} username={props.friendName} onClose={handleDialogClose}/>
         </>
     );
 }
