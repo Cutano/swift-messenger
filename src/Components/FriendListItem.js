@@ -5,6 +5,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ChatAPI from "../Apis/ChatAPI";
 import {formatTime} from "../Utilities/utilFunctions";
+import * as Tone from 'tone'
 
 export default function FriendListItem(props) {
     const [isOnline, setIsOnline] = useState(false);
@@ -22,10 +23,26 @@ export default function FriendListItem(props) {
             setIsOnline(status);
         }
 
+        function playNewMsgSound() {
+            const synth = new Tone.MonoSynth({
+                oscillator: {
+                    type: "sine"
+                },
+                envelope: {
+                    attack: 0.5
+                }
+            }).toDestination();
+            const now = Tone.now()
+            synth.triggerAttackRelease("C4", 0.15, now)
+            synth.triggerAttackRelease("A4", 0.15, now + 0.2)
+            synth.triggerAttackRelease("G4", 0.2, now + 0.4)
+        }
+
         const handleNewMsg = data => {
             if (props.selected !== props.friendID) {
                 setUnreadMsgCount((msgCount) => (msgCount + 1));
                 setIsOnline(true);
+                playNewMsgSound();
             }
             setRecentMsg(data.text);
             setRecentMsgTime(data.timeStamp);

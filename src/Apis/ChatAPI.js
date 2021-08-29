@@ -10,7 +10,7 @@ export default class ChatAPI {
     static friendNewMsgHandlers = new Map();
     static conversationNewMsgHandlers = new Map();
     static historyMsgHandler;
-    static chatRoomNewMsgHandler;
+    static chatRoomNewMsgHandler = null;
     static userStatusChangeHandler;
 
     static setUserID(id) {
@@ -74,7 +74,7 @@ export default class ChatAPI {
                     }
                     break;
                 case "chatRoomMsg":
-                    if (this.chatRoomNewMsgHandler !== null) {
+                    if (this.chatRoomNewMsgHandler) {
                         this.chatRoomNewMsgHandler(data.data);
                     }
                     break;
