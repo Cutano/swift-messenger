@@ -1,0 +1,11 @@
+{
+  "type": "chatRoomMsg",
+  "data": {
+    "msgID": 2345456,
+    "senderID": 23443443,
+    "senderName": "sdghd",
+    "avatar": "base64",
+    "timeStamp": 1629449714182,
+    "text": "rfhbfhrfhr"
+  }
+}

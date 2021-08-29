@@ -9,12 +9,14 @@ import FriendListItem from "./FriendListItem";
 import ChatAPI from "../Apis/ChatAPI";
 import UserBanner from "./UserBanner";
 import MessageFragment from "./MessageFragment";
-import {Add} from "@material-ui/icons";
+import {Add, Group} from "@material-ui/icons";
 import AddFriendDialog from "./AddFriendDialog";
 import {Fade, ListItem, Skeleton} from "@material-ui/core";
+import ChatRoomFragment from "./ChatRoomFragment";
 
 export default function Chat(props) {
     const [selectedFriend, setSelectedFriend] = useState(null);
+    const [chatRoomSelected, setChatRoomSelected] = useState(false);
     const [friendList, setFriendList] = useState([]);
     const [addFriendDialogOpen, setAddFriendDialogOpen] = useState(false);
     const [avatar, setAvatar] = useState("");
@@ -43,12 +45,18 @@ export default function Chat(props) {
     }
 
     const handleSelectionChange = (e, friend) => {
+        setChatRoomSelected(false);
         setSelectedFriend(friend);
         ChatAPI.clearUnreadMsg(friend.friendID, handleClearUnread);
     }
 
     const handleFabClick = () => {
         setAddFriendDialogOpen(true);
+    }
+
+    const handleChatRoomFabClicked = () => {
+        setSelectedFriend(null);
+        setChatRoomSelected(true);
     }
 
     const handleUserInfo = (data) => {
@@ -112,6 +120,9 @@ export default function Chat(props) {
                             )))}
                         </List>
                     </Fade>
+                    <Fab color="primary" sx={{position: "absolute", bottom: 90, right: 30}} onClick={handleChatRoomFabClicked}>
+                        <Group/>
+                    </Fab>
                     <Fab color="primary" sx={{position: "absolute", bottom: 20, right: 30}} onClick={handleFabClick}>
                         <Add/>
                     </Fab>
@@ -119,9 +130,9 @@ export default function Chat(props) {
             </Grid>
             <Grid item xl={9} md={8} xs={7}
                   sx={{bottom: 0, height: "100%", display: "flex", flexDirection: "column", minHeight: "min-content"}}>
-                {selectedFriend !== null &&
-                <MessageFragment friendID={selectedFriend.friendID} friendName={selectedFriend.friendName}
-                                 friendAvatar={selectedFriend.friendAvatar}/>}
+                {chatRoomSelected ? <ChatRoomFragment userID={props.userID}/> : (selectedFriend !== null &&
+                    <MessageFragment friendID={selectedFriend.friendID} friendName={selectedFriend.friendName}
+                                     friendAvatar={selectedFriend.friendAvatar}/>)}
             </Grid>
             <AddFriendDialog handleCancel={handleAddFriendDialogCancel} handleDone={handleAddFriendDialogDone}
                              open={addFriendDialogOpen}/>

@@ -10,6 +10,7 @@ export default class ChatAPI {
     static friendNewMsgHandlers = new Map();
     static conversationNewMsgHandlers = new Map();
     static historyMsgHandler;
+    static chatRoomNewMsgHandler;
     static userStatusChangeHandler;
 
     static setUserID(id) {
@@ -72,6 +73,11 @@ export default class ChatAPI {
                         }
                     }
                     break;
+                case "chatRoomMsg":
+                    if (this.chatRoomNewMsgHandler !== null) {
+                        this.chatRoomNewMsgHandler(data.data);
+                    }
+                    break;
                 // case  "historyMsg":
                 //     if (this.historyMsgHandler)
                 //         this.historyMsgHandler(data.data.msgs);
@@ -126,6 +132,18 @@ export default class ChatAPI {
                 timeStamp: Date.now(),
                 text: text,
                 hasRead: false
+            }
+        };
+        this.socket.send(JSON.stringify(data));
+    }
+
+    static sendChatRoomMessage(text) {
+        const data = {
+            type: "chatRoomMsg",
+            data: {
+                senderID: this.userID,
+                timeStamp: Date.now(),
+                text: text
             }
         };
         this.socket.send(JSON.stringify(data));
@@ -186,6 +204,10 @@ export default class ChatAPI {
         this.conversationNewMsgHandlers.set(friendID, handleNewMsg);
     }
 
+    static subscribeToChatRoomNewMsg(newMsgHandler) {
+        this.chatRoomNewMsgHandler = newMsgHandler;
+    }
+
     static unsubscribeToAddNewFriend() {
         this.addNewFriendHandler = null;
     }
@@ -208,5 +230,9 @@ export default class ChatAPI {
 
     static unsubscribeFromConversationNewMsg(friendID) {
         this.conversationNewMsgHandlers.delete(friendID);
+    }
+
+    static unsubscribeFromChatRoomNewMsg() {
+        this.chatRoomNewMsgHandler = null;
     }
 }
