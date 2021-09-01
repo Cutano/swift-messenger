@@ -1,0 +1,13 @@
+server:
+  port: 10124
+
+spring:
+  datasource:
+    url: jdbc:mysql://rinne.top:3306/messenger?useUnicode=true&characterEncoding=UTF-8
+    username: messenger
+    password: 12345aaaa
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: team.cutano.swiftmessengerservice.pojo
